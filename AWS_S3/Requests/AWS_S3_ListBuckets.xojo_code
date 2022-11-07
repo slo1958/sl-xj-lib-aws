@@ -1,6 +1,6 @@
 #tag Class
 Protected Class AWS_S3_ListBuckets
-Inherits AWS_Common_Request
+Inherits AWS_Common_Host_Request
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.
@@ -54,7 +54,7 @@ Inherits AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SendRequest(server as AWS_Common) As AWS_S3_Item()
+		Function SendRequest(server as AWS_Common_Host) As AWS_S3_Item()
 		  dim tmp() as AWS_S3_item
 		  
 		  super.SendRequest(server,"")

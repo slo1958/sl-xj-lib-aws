@@ -1,6 +1,6 @@
 #tag Class
 Protected Class AWS_S3_GetObject
-Inherits AWS_Common_Request
+Inherits AWS_Common_Host_Request
 	#tag Method, Flags = &h0
 		Sub Constructor(theBucket as string, theObjectKey as string)
 		  // Calling the overridden superclass constructor.
@@ -11,7 +11,7 @@ Inherits AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SendRequest(server as AWS_Common) As String
+		Function SendRequest(server as AWS_Common_Host) As String
 		  
 		  dim tmp_host_prefix as string = self.BucketName + "." 
 		  

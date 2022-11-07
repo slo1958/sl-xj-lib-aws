@@ -237,22 +237,18 @@ End
 	#tag Event
 		Sub Action()
 		  
-		  dim s3 as new AWS_S3(AWS_Common.LoadCredentials)
+		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim r3  as new AWS_S3_ListBuckets()
+		  dim s3_request  as new AWS_S3_ListBuckets()
 		  
-		  dim lst() as AWS_S3_item = r3.SendRequest(s3)
+		  dim list_of_buckets() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
-		  'dim tmp as string = s3.listBuckets()
-		  
-		  'dim lst() as AWS_S3_item = s3.ExtractBucketListFromXML(tmp)
-		  
-		  TextArea1.text = r3.ReplyText
+		  TextArea1.text = s3_request.ReplyText
 		  
 		  Listbox1.DeleteAllRows
 		  Listbox1.ColumnCount =2
 		  
-		  for each item as AWS_S3_item in lst
+		  for each item as AWS_S3_item in list_of_buckets
 		    listbox1.AddRow item.name
 		    listbox1.Cell(Listbox1.LastIndex, 1) = item.CreationDate
 		    
@@ -267,14 +263,13 @@ End
 	#tag Event
 		Sub Action()
 		  
-		  dim s3 as new AWS_S3(AWS_Common.LoadCredentials)
+		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim r3 as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001")
+		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001")
 		  
+		  dim lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
-		  dim lst() as AWS_S3_item = r3.SendRequest(s3)
-		  
-		  TextArea1.text = r3.ReplyText
+		  TextArea1.text = s3_request.ReplyText
 		  
 		  Listbox1.DeleteAllRows
 		  Listbox1.ColumnCount =3
@@ -294,15 +289,11 @@ End
 	#tag Event
 		Sub Action()
 		  
-		  dim s3 as new AWS_S3(AWS_Common.LoadCredentials)
+		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim r3 as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.h")
+		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.h")
 		  
-		  'dim tmp as string = s3.GetObject("sl58-aws-bucket-001","I2C/i2c.h")
-		  
-		  'dim lst() as AWS_S3_item = s3.ExtractObjectInfoFromXML(tmp)
-		  
-		  dim tmp as string = r3.SendRequest(s3)
+		  dim tmp as string = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = tmp
 		End Sub

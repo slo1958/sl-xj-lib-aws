@@ -1,6 +1,6 @@
 #tag Class
 Protected Class AWS_S3_Test
-Inherits AWS_S3
+Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.
@@ -310,7 +310,7 @@ Inherits AWS_S3
 		  
 		  dim v as MemoryBlock = Crypto.SHA256("")
 		  
-		  dim res_calculated as string = AWS_S3.MemoryBlockToHex(v).Lowercase()
+		  dim res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
@@ -337,7 +337,7 @@ Inherits AWS_S3
 		  
 		  dim v as MemoryBlock = Crypto.SHA256(join(tmp_elements, chr(10)))
 		  
-		  dim res_calculated as string = AWS_S3.MemoryBlockToHex(v).Lowercase()
+		  dim res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)

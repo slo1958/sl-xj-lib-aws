@@ -1,13 +1,13 @@
 #tag Class
-Protected Class AWS_S3
-Inherits AWS_Common
+Protected Class AWS_S3_Host
+Inherits AWS_Common_Host
 	#tag Method, Flags = &h0
 		Sub Constructor(credentials as Dictionary)
 		  // Calling the overridden superclass constructor.
 		  // Note that this may need modifications if there are multiple constructor choices.
 		  // Possible constructor calls:
-		  // Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string="us-east-1") -- From AWS_Common
-		  // Constructor(credentials as Dictionary) -- From AWS_Common
+		  // Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string="us-east-1") -- From AWS_Common_Host
+		  // Constructor(credentials as Dictionary) -- From AWS_Common_Host
 		  Super.Constructor(credentials)
 		  
 		  AWSService = "s3"

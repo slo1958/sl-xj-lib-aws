@@ -1,5 +1,5 @@
 #tag Class
-Protected Class AWS_Common
+Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Shared Function ComputeBlockSizedKey(key as MemoryBlock, blockSize as integer) As MemoryBlock
 		  
@@ -209,7 +209,7 @@ Protected Class AWS_Common
 		  
 		  dim v as MemoryBlock = Crypto.SHA256(payload)
 		  
-		  return AWS_S3.MemoryBlockToHex(v).Lowercase()
+		  return AWS_S3_host.MemoryBlockToHex(v).Lowercase()
 		End Function
 	#tag EndMethod
 

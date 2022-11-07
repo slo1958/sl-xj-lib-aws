@@ -1,5 +1,5 @@
 #tag Class
-Protected Class AWS_Common_Request
+Protected Class AWS_Common_Host_Request
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  HTTPMethod = "GET"
@@ -48,7 +48,7 @@ Protected Class AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub SendRequest(server as AWS_Common, host_prefix as string)
+		Sub SendRequest(server as AWS_Common_Host, host_prefix as string)
 		  
 		  dim tmp_http_method as string = self.HTTPMethod
 		  dim tmp_host as string = host_prefix + server.getHost
