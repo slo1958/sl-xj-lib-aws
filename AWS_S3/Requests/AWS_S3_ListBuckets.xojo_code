@@ -11,8 +11,17 @@ Inherits AWS_Common_Request
 
 	#tag Method, Flags = &h0
 		Shared Function ExtractBucketListFromXML(theXMLStr as String) As AWS_S3_Item()
+		  const XMLStrStart as string = "<?xml version=""1.0"" encoding=""UTF-8""?> <ListAllMyBucketsResult"
 		  
 		  dim retList() as AWS_S3_item
+		  
+		  
+		  if left(theXMLStr.trim(), len(XMLStrStart)) <> XMLStrStart then
+		    return retList
+		    
+		  end if
+		  
+		  
 		  
 		  dim tmp_xml_str as String = theXMLStr
 		  

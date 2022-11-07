@@ -9,6 +9,22 @@ Protected Class AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Shared Function DecodeError(theXMLStr as String) As string
+		  ' <?xml version=""1.0"" encoding=""UTF-8""?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>sl58-aws-bucket-001kk</BucketName><RequestId>2DPRQCN9JMZG10G7</RequestId><HostId>42ZoaPcOc+06Vc7WP4bAzj7JPtj9Pnb9lJGZbM2b/nIPeI8IWTLCp1vjRnBbqJb66E/WjqKcHnRpZi7SwT9K+g==</HostId></Error>
+		  
+		  const XMLStrStart as String = "<?xml version=""1.0"" encoding=""UTF-8""?><Error>"
+		  
+		  if left(theXMLStr, len(XMLStrStart)) <> XMLStrStart then
+		    return ""
+		    
+		  end if
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Shared Function DecodeTimeStamp(theTimeStamp as String) As date
 		  'Mon, 07 Nov 2022 11:03:43 GMT
 		  

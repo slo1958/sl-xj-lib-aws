@@ -28,6 +28,22 @@ Inherits AWS_S3_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function DecodeError_test_01() As string
+		  dim res_calculated as String
+		  
+		  dim input_str as string = "<?xml version=""1.0"" encoding=""UTF-8""?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>sl58-aws-bucket-001kk</BucketName><RequestId>2DPRQCN9JMZG10G7</RequestId><HostId>42ZoaPcOc+06Vc7WP4bAzj7JPtj9Pnb9lJGZbM2b/nIPeI8IWTLCp1vjRnBbqJb66E/WjqKcHnRpZi7SwT9K+g==</HostId></Error>"
+		  dim res_expected as string = "NoSuchBucket"
+		  
+		  
+		  res_calculated = AWS_Common_Request.DecodeError(input_str)
+		  
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function DecodeTimeStemp_test_01() As string
 		  dim res_calculated as String
 		  dim res_expected as string = "2022-11-07 11:03:43"
