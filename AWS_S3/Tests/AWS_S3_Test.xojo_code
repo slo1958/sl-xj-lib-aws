@@ -28,6 +28,67 @@ Inherits AWS_S3_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function DecodeTimeStemp_test_01() As string
+		  dim res_calculated as String
+		  dim res_expected as string = "2022-11-07 11:03:43"
+		  
+		  dim input_str as string = "Mon, 07 Nov 2022 11:03:43 GMT"
+		  
+		  
+		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  
+		  if tmp_date = nil then
+		    res_calculated = "NIL"
+		  else 
+		    res_calculated= AWS_Common_Request.DecodeTimeStamp(input_str).SQLDateTime
+		  end if
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DecodeTimeStemp_test_02() As string
+		  dim res_calculated as String
+		  dim res_expected as string = "NIL"
+		  
+		  dim input_str as string = "Mon, 07 YAPI 2022 11:03:43 GMT"
+		  
+		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  
+		  if tmp_date = nil then
+		    res_calculated = "NIL"
+		  else 
+		     res_calculated= AWS_Common_Request.DecodeTimeStamp(input_str).SQLDateTime
+		  end if
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DecodeTimeStemp_test_03() As string
+		  dim res_calculated as String
+		  dim res_expected as string = "NIL"
+		  
+		  dim input_str as string = "Mon, 07 Nov 2022 11:03:43 UTC+2"
+		  
+		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  
+		  if tmp_date = nil then
+		    res_calculated = "NIL"
+		  else 
+		     res_calculated= AWS_Common_Request.DecodeTimeStamp(input_str).SQLDateTime
+		  end if
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ExtractBucketListFromXML_test_01() As string
 		  dim tmp_input_xml as string =" <?xml version=""1.0"" encoding=""UTF-8""?> <ListAllMyBucketsResult xmlns=""http://s3.amazonaws.com/doc/2006-03-01/""><Owner><ID>862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><Buckets><Bucket><Name>alphabeta</Name><CreationDate>2022-03-14T12:07:48.000Z</CreationDate></Bucket></Buckets></ListAllMyBucketsResult>"
 		  
@@ -370,6 +431,10 @@ Inherits AWS_S3_Host
 		  test_results.Append(self.ExtractBucketListFromXML_test_01)
 		  
 		  test_results.Append(self.ExtractObjectInfoFromXML_test_01)
+		  
+		  test_results.Append(self.DecodeTimeStemp_test_01)
+		  test_results.Append(self.DecodeTimeStemp_test_02)
+		  test_results.Append(self.DecodeTimeStemp_test_03)
 		  
 		  
 		  dim nb_tests as integer

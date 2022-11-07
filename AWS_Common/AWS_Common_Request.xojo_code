@@ -9,6 +9,58 @@ Protected Class AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Shared Function DecodeTimeStamp(theTimeStamp as String) As date
+		  'Mon, 07 Nov 2022 11:03:43 GMT
+		  
+		  dim tmp_timestamp as String = theTimeStamp.trim()
+		  
+		  dim tmp_arr() as string = tmp_timestamp.split(" ")
+		  dim tmp_list_month() as String
+		  
+		  dim tmp_src as string =  ",Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"
+		  tmp_list_month = tmp_src.split(",")
+		  
+		  if tmp_arr.Ubound < 5 then
+		    return nil
+		  end if
+		  
+		  dim tmp_month as Integer = tmp_list_month.IndexOf(tmp_arr(2))
+		  
+		  if tmp_month <1 then
+		    Return nil 
+		    
+		  end if
+		  
+		  if tmp_arr(5).Uppercase.trim() <> "GMT" then
+		    return nil
+		    
+		  end if
+		  
+		  
+		  dim tmp_day as integer = val(tmp_arr(1))
+		  dim tmp_year as integer = val(tmp_arr(3))
+		  
+		  dim tmp_str as string =   _
+		  format(tmp_year,"0000") _
+		  + "-" _
+		  + format(tmp_month, "00") _  
+		  + "-" _
+		  + format(tmp_day, "00") _
+		  + " " _
+		  + tmp_arr(4)
+		  
+		  dim d as new date
+		  
+		  d.GMTOffset = 0
+		  d.SQLDateTime = tmp_str
+		  
+		  return d
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Shared Function GetChildNodeFromXMLNode(theNode as XMLNode, theChildName as string) As XmlNode
 		  dim tmp_src_node as XmlNode = theNode
 		  
@@ -25,6 +77,61 @@ Protected Class AWS_Common_Request
 		  wend
 		  
 		  return ret_value
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetContentLength() As integer
+		  const header_key as string = "Content-Length"
+		  
+		  return Clong(self.GetReplyHeaderValue(header_key))
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetReplyDate() As Date
+		  const header_key as string = "Date"
+		  
+		  dim tmp_str as string = self.GetReplyHeaderValue(header_key)
+		  
+		  dim tmp_date as date = DecodeTimeStamp(tmp_str)
+		  
+		  if tmp_date = nil then
+		    tmp_date = new date(1900,1,1)
+		    
+		  end if
+		  
+		  return tmp_date 
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetReplyHeaderValue(theHeaderKey as String) As string
+		  dim tmp As String
+		  
+		  tmp = self.ReplyHeaders.Value(theHeaderKey)
+		  
+		  return tmp
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetRequestID() As string
+		  const header_key as string = "x-amz-request-id"
+		  
+		  return self.GetReplyHeaderValue(header_key)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetRequestID2() As string
+		  const header_key as string = "x-amz-id-2"
+		  
+		  return self.GetReplyHeaderValue(header_key)
+		  
 		End Function
 	#tag EndMethod
 
