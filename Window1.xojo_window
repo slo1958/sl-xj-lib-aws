@@ -239,11 +239,15 @@ End
 		  
 		  dim s3 as new AWS_S3(AWS_Common.LoadCredentials)
 		  
-		  dim tmp as string = s3.listBuckets()
+		  dim r3  as new AWS_S3_ListBuckets()
 		  
-		  dim lst() as AWS_S3_item = s3.ExtractBucketListFromXML(tmp)
+		  dim lst() as AWS_S3_item = r3.SendRequest(s3)
 		  
-		  TextArea1.text = tmp
+		  'dim tmp as string = s3.listBuckets()
+		  
+		  'dim lst() as AWS_S3_item = s3.ExtractBucketListFromXML(tmp)
+		  
+		  TextArea1.text = r3.ReplyText
 		  
 		  Listbox1.DeleteAllRows
 		  Listbox1.ColumnCount =2
@@ -255,6 +259,7 @@ End
 		  next
 		  
 		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -264,11 +269,12 @@ End
 		  
 		  dim s3 as new AWS_S3(AWS_Common.LoadCredentials)
 		  
-		  dim tmp as string = s3.listObjectsInBucket("sl58-aws-bucket-001")
+		  dim r3 as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001")
 		  
-		  dim lst() as AWS_S3_item = s3.ExtractObjectInfoFromXML(tmp)
 		  
-		  TextArea1.text = tmp
+		  dim lst() as AWS_S3_item = r3.SendRequest(s3)
+		  
+		  TextArea1.text = r3.ReplyText
 		  
 		  Listbox1.DeleteAllRows
 		  Listbox1.ColumnCount =3
@@ -290,12 +296,15 @@ End
 		  
 		  dim s3 as new AWS_S3(AWS_Common.LoadCredentials)
 		  
-		  dim tmp as string = s3.GetObject("sl58-aws-bucket-001","I2C/i2c.h")
+		  dim r3 as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.h")
+		  
+		  'dim tmp as string = s3.GetObject("sl58-aws-bucket-001","I2C/i2c.h")
 		  
 		  'dim lst() as AWS_S3_item = s3.ExtractObjectInfoFromXML(tmp)
 		  
-		  TextArea1.text = tmp
+		  dim tmp as string = r3.SendRequest(s3)
 		  
+		  TextArea1.text = tmp
 		End Sub
 	#tag EndEvent
 #tag EndEvents

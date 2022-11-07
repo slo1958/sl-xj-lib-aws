@@ -464,18 +464,9 @@ Protected Class AWS_Common
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function Request(HTTPMethod as string, Host as string, URI as String, QueryParams as dictionary, Headers() as AWS_Request_Header, payload as string, RequestTime as date = Nil) As string
+		Function Request(HTTPMethod as string, Host as string, URI as String, QueryParams as dictionary, UserHeaders() as AWS_Request_Header, payload as string) As AWS_Reply
 		  
-		  '
-		  ' Log request time for consistency
-		  '
-		  if RequestTime = nil then
-		    self.RequestDateTime = new date()
-		    
-		  else
-		    self.RequestDateTime = RequestTime
-		    
-		  end if
+		  self.RequestDateTime = new date()
 		  
 		  '
 		  ' Add AWS headers
@@ -483,6 +474,13 @@ Protected Class AWS_Common
 		  
 		  dim payload_hash as string = self.GetHashedPayload(payload)
 		  dim formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
+		  
+		  Dim Headers() as AWS_Request_Header
+		  for each item as AWS_Request_Header in UserHeaders
+		    Headers.Append(item.clone())
+		    
+		  next
+		  
 		  
 		  Headers.Append(new AWS_Request_Header("host" ,Host, True))
 		  Headers.Append(new AWS_Request_Header("x-amz-content-sha256", payload_hash, True))
@@ -509,10 +507,10 @@ Protected Class AWS_Common
 		  dim url as string = host + uri ' "s3.eu-west-3.amazonaws.com"
 		  
 		  dim timeout as integer = 30
-		  dim reply as string
+		  dim reply as new AWS_Reply
 		  
-		  reply = ct.SendRequest(HTTPMethod, url, timeout)
-		  dim rh as variant= ct.PageHeaders
+		  reply.ReplyText = ct.SendRequest(HTTPMethod, url, timeout)
+		  reply.Headers= ct.PageHeaders
 		  
 		  return reply
 		  

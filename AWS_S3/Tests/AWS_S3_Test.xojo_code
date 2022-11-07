@@ -33,10 +33,10 @@ Inherits AWS_S3
 		  
 		  dim res_expected as string = "alphabeta"
 		  
-		  dim  res_calculated as String = join_names(self.ExtractBucketListFromXML(tmp_input_xml))
+		  dim  res_calculated as String = join_names(AWS_S3_ListBuckets.ExtractBucketListFromXML(tmp_input_xml))
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
-		   
+		  
 		End Function
 	#tag EndMethod
 
@@ -46,7 +46,7 @@ Inherits AWS_S3
 		  
 		  dim res_expected as string = "myfiles/;PI-Silenzio-Retro-ZR-(fr).pdf"
 		  
-		  dim  res_calculated as String = join_names( ExtractObjectInfoFromXML(tt))
+		  dim  res_calculated as String = join_names( AWS_S3_ListObjectsInBucket.ExtractObjectInfoFromXML(tt))
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
