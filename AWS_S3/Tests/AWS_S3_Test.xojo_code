@@ -1,6 +1,6 @@
 #tag Class
 Protected Class AWS_S3_Test
-Inherits AWS_S3
+Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.
@@ -28,15 +28,92 @@ Inherits AWS_S3
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function DecodeError_test_01() As string
+		  dim res_calculated as String
+		  
+		  dim input_str as string = "<?xml version=""1.0"" encoding=""UTF-8""?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>sl58-aws-bucket-001kk</BucketName><RequestId>2DPRQCN9JMZG10G7</RequestId><HostId>42ZoaPcOc+06Vc7WP4bAzj7JPtj9Pnb9lJGZbM2b/nIPeI8IWTLCp1vjRnBbqJb66E/WjqKcHnRpZi7SwT9K+g==</HostId></Error>"
+		  dim res_expected as string = "NoSuchBucket"
+		  
+		  
+		  res_calculated = AWS_Common_Request.DecodeError(input_str)
+		  
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DecodeTimeStemp_test_01() As string
+		  dim res_calculated as String
+		  dim res_expected as string = "2022-11-07 11:03:43"
+		  
+		  dim input_str as string = "Mon, 07 Nov 2022 11:03:43 GMT"
+		  
+		  
+		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  
+		  if tmp_date = nil then
+		    res_calculated = "NIL"
+		  else 
+		    res_calculated= AWS_Common_Request.DecodeTimeStamp(input_str).SQLDateTime
+		  end if
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DecodeTimeStemp_test_02() As string
+		  dim res_calculated as String
+		  dim res_expected as string = "NIL"
+		  
+		  dim input_str as string = "Mon, 07 YAPI 2022 11:03:43 GMT"
+		  
+		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  
+		  if tmp_date = nil then
+		    res_calculated = "NIL"
+		  else 
+		     res_calculated= AWS_Common_Request.DecodeTimeStamp(input_str).SQLDateTime
+		  end if
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DecodeTimeStemp_test_03() As string
+		  dim res_calculated as String
+		  dim res_expected as string = "NIL"
+		  
+		  dim input_str as string = "Mon, 07 Nov 2022 11:03:43 UTC+2"
+		  
+		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  
+		  if tmp_date = nil then
+		    res_calculated = "NIL"
+		  else 
+		     res_calculated= AWS_Common_Request.DecodeTimeStamp(input_str).SQLDateTime
+		  end if
+		  
+		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ExtractBucketListFromXML_test_01() As string
 		  dim tmp_input_xml as string =" <?xml version=""1.0"" encoding=""UTF-8""?> <ListAllMyBucketsResult xmlns=""http://s3.amazonaws.com/doc/2006-03-01/""><Owner><ID>862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><Buckets><Bucket><Name>alphabeta</Name><CreationDate>2022-03-14T12:07:48.000Z</CreationDate></Bucket></Buckets></ListAllMyBucketsResult>"
 		  
 		  dim res_expected as string = "alphabeta"
 		  
-		  dim  res_calculated as String = join_names(self.ExtractBucketListFromXML(tmp_input_xml))
+		  dim  res_calculated as String = join_names(AWS_S3_ListBuckets.ExtractBucketListFromXML(tmp_input_xml))
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
-		   
+		  
 		End Function
 	#tag EndMethod
 
@@ -46,7 +123,7 @@ Inherits AWS_S3
 		  
 		  dim res_expected as string = "myfiles/;PI-Silenzio-Retro-ZR-(fr).pdf"
 		  
-		  dim  res_calculated as String = join_names( ExtractObjectInfoFromXML(tt))
+		  dim  res_calculated as String = join_names( AWS_S3_ListObjectsInBucket.ExtractObjectInfoFromXML(tt))
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -310,7 +387,7 @@ Inherits AWS_S3
 		  
 		  dim v as MemoryBlock = Crypto.SHA256("")
 		  
-		  dim res_calculated as string = AWS_S3.MemoryBlockToHex(v).Lowercase()
+		  dim res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
@@ -337,7 +414,7 @@ Inherits AWS_S3
 		  
 		  dim v as MemoryBlock = Crypto.SHA256(join(tmp_elements, chr(10)))
 		  
-		  dim res_calculated as string = AWS_S3.MemoryBlockToHex(v).Lowercase()
+		  dim res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
@@ -370,6 +447,10 @@ Inherits AWS_S3
 		  test_results.Append(self.ExtractBucketListFromXML_test_01)
 		  
 		  test_results.Append(self.ExtractObjectInfoFromXML_test_01)
+		  
+		  test_results.Append(self.DecodeTimeStemp_test_01)
+		  test_results.Append(self.DecodeTimeStemp_test_02)
+		  test_results.Append(self.DecodeTimeStemp_test_03)
 		  
 		  
 		  dim nb_tests as integer

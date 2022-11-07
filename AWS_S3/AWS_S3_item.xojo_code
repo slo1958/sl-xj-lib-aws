@@ -1,18 +1,11 @@
 #tag Class
-Protected Class AWS_Request_Header
-	#tag Method, Flags = &h0
-		Sub Constructor(theName as string, theValue as String, IncludeInSignature as Boolean)
-		  self.Name = theName
-		  self.Value = theValue
-		  self.AddToSignature = IncludeInSignature
-		  
-		  
-		End Sub
-	#tag EndMethod
-
+Protected Class AWS_S3_item
+	#tag Property, Flags = &h0
+		CreationDate As string
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		AddToSignature As Boolean
+		ModificationDate As string
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -20,15 +13,23 @@ Protected Class AWS_Request_Header
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Value As string
+		Owner As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Size As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		StorageClass As string
 	#tag EndProperty
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="AddToSignature"
+			Name="CreationDate"
 			Group="Behavior"
-			Type="Boolean"
+			Type="string"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -45,6 +46,11 @@ Protected Class AWS_Request_Header
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="ModificationDate"
+			Group="Behavior"
+			Type="string"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
@@ -54,6 +60,21 @@ Protected Class AWS_Request_Header
 			Name="Name"
 			Group="Behavior"
 			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Owner"
+			Group="Behavior"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Size"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StorageClass"
+			Group="Behavior"
+			Type="string"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
@@ -67,11 +88,6 @@ Protected Class AWS_Request_Header
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Value"
-			Group="Behavior"
-			Type="string"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

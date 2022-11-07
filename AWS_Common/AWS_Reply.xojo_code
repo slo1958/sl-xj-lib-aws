@@ -1,27 +1,11 @@
 #tag Class
-Protected Class AWS_S3_item
+Protected Class AWS_Reply
 	#tag Property, Flags = &h0
-		CreationDate As string
+		Headers As InternetHeaders
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ModificationDate As string
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Name As string
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Owner As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Size As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		StorageClass As string
+		ReplyText As string
 	#tag EndProperty
 
 
@@ -47,7 +31,7 @@ Protected Class AWS_S3_item
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Name"
+			Name="ReplyText"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
