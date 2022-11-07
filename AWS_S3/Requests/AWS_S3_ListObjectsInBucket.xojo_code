@@ -1,6 +1,6 @@
 #tag Class
 Protected Class AWS_S3_ListObjectsInBucket
-Inherits AWS_Common_Host_Request
+Inherits AWS_Common_Request
 	#tag Method, Flags = &h0
 		Sub Constructor(theBucket as string)
 		  // Calling the overridden superclass constructor.

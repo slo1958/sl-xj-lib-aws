@@ -1,6 +1,6 @@
 #tag Class
 Protected Class AWS_S3_ListBuckets
-Inherits AWS_Common_Host_Request
+Inherits AWS_Common_Request
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.

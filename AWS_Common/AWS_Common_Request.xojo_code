@@ -1,5 +1,5 @@
 #tag Class
-Protected Class AWS_Common_Host_Request
+Protected Class AWS_Common_Request
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  HTTPMethod = "GET"
@@ -68,12 +68,6 @@ Protected Class AWS_Common_Host_Request
 		  
 		End Sub
 	#tag EndMethod
-
-
-	#tag Note, Name = Untitled
-		
-		HTTPMethod as string, Host as string, URI as String, QueryParams as dictionary, UserHeaders() as AWS_Request_Header, payload as string
-	#tag EndNote
 
 
 	#tag Property, Flags = &h0
