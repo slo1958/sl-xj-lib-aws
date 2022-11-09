@@ -1,43 +1,65 @@
 #tag Class
-Protected Class AWS_S3_item
+Protected Class AWS_Error_info
 	#tag Method, Flags = &h0
-		Sub Constructor(theName as string = "")
-		  self.Name = theName
+		Sub Constructor(theXMLDoc as XMLDocument)
+		  self.parameters = new Dictionary
+		  
+		  DecodeError(theXMLDoc)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub DecodeError(theXMLDoc as XMLDocument)
+		  
+		  dim tmp_node0 as XmlNode = theXmlDoc.FirstChild
+		  
+		  dim tmp_node1 as XmlNode = tmp_node0.FirstChild
+		  
+		  while tmp_node1 <> nil 
+		    dim t1 as string = tmp_node1.Name
+		    dim t2 as String = tmp_node1.FirstChild.Value
+		    
+		    if t1.trim.Uppercase = "CODE" then
+		      self.code = t2
+		      
+		    elseif t1.trim.Uppercase = "MESSAGE" then
+		      self.Message = t2
+		      
+		    else
+		      self.parameters.Value(t1) = t2
+		      
+		    end   if
+		    
+		    tmp_node1 = tmp_node1.NextSibling
+		    
+		  wend
 		  
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		CreationDate As string
+		#tag Note
+			Public Property Code as String
+		#tag EndNote
+		Code As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ModificationDate As string
+		Message As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Name As string
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Owner As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Size As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		StorageClass As string
+		parameters As Dictionary
 	#tag EndProperty
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="CreationDate"
+			Name="Code"
 			Group="Behavior"
-			Type="string"
+			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -55,9 +77,9 @@ Protected Class AWS_S3_item
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ModificationDate"
+			Name="Message"
 			Group="Behavior"
-			Type="string"
+			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -65,28 +87,6 @@ Protected Class AWS_S3_item
 			Visible=true
 			Group="ID"
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Name"
-			Group="Behavior"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Owner"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Size"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="StorageClass"
-			Group="Behavior"
-			Type="string"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

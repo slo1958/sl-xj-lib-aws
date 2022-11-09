@@ -32,11 +32,11 @@ Inherits AWS_S3_Host
 		  dim res_calculated as String
 		  
 		  dim input_str as string = "<?xml version=""1.0"" encoding=""UTF-8""?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>sl58-aws-bucket-001kk</BucketName><RequestId>2DPRQCN9JMZG10G7</RequestId><HostId>42ZoaPcOc+06Vc7WP4bAzj7JPtj9Pnb9lJGZbM2b/nIPeI8IWTLCp1vjRnBbqJb66E/WjqKcHnRpZi7SwT9K+g==</HostId></Error>"
-		  dim res_expected as string = "NoSuchBucket::The specified bucket does not exist"
-		  
+		  dim res_expected as string = "NoSuchBucket;the specified bucket does not exist"
 		  
 		  dim tmp as new AWS_Error_info(new XmlDocument(input_str))
-		  res_calculated = tmp.Code+"::"+tmp.message
+		  
+		  res_calculated = tmp.Code+";"+tmp.Message
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)

@@ -9,7 +9,7 @@ Begin Window Window1
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   680
+   Height          =   632
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -217,169 +217,6 @@ Begin Window Window1
       Visible         =   True
       Width           =   80
    End
-   Begin Label Label1
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "Untitled"
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   616
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
-   Begin Label Label2
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   228
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "Untitled"
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   616
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   352
-   End
-   Begin PushButton pb_objects1
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Objects"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   136
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   8
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   82
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin PushButton PushButton2
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Button"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   279
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   82
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin PushButton PushButton3
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Button"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   279
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   10
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   114
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
 End
 #tag EndWindow
 
@@ -400,7 +237,6 @@ End
 	#tag Event
 		Sub Action()
 		  
-		  
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
 		  dim s3_request  as new AWS_S3_ListBuckets()
@@ -408,16 +244,6 @@ End
 		  dim list_of_buckets() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = s3_request.ReplyText
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    
-		  end if
 		  
 		  Listbox1.DeleteAllRows
 		  Listbox1.ColumnCount =2
@@ -441,18 +267,6 @@ End
 		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001")
 		  
 		  dim lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
-		  
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    
-		  end if
-		  
 		  
 		  TextArea1.text = s3_request.ReplyText
 		  
@@ -481,110 +295,6 @@ End
 		  dim tmp as string = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = tmp
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    TextArea1.text = tmp
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    TextArea1.text = s3_request.ReplyText
-		    
-		  end if
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events pb_objects1
-	#tag Event
-		Sub Action()
-		  
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
-		  
-		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001xx")
-		  
-		  dim lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
-		  
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    
-		  end if
-		  
-		  TextArea1.text = s3_request.ReplyText
-		  
-		  Listbox1.DeleteAllRows
-		  Listbox1.ColumnCount =3
-		  
-		  for each item as AWS_S3_item in lst
-		    listbox1.AddRow item.name
-		    listbox1.Cell(Listbox1.LastIndex, 1) = item.ModificationDate
-		    Listbox1.cell(Listbox1.LastIndex,2) = str(item.Size)
-		    
-		  next
-		  
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton2
-	#tag Event
-		Sub Action()
-		  
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
-		  
-		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.hxyz")
-		  
-		  dim tmp as string = s3_request.SendRequest(s3_host)
-		  
-		  TextArea1.text = tmp
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    TextArea1.text = tmp
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    TextArea1.text = s3_request.ReplyText
-		    
-		  end if
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton3
-	#tag Event
-		Sub Action()
-		  
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
-		  
-		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001xyz","I2C/i2c.h")
-		  
-		  dim tmp as string = s3_request.SendRequest(s3_host)
-		  
-		  TextArea1.text = tmp
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    TextArea1.text = tmp
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    TextArea1.text = s3_request.ReplyText
-		    
-		  end if
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

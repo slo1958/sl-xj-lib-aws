@@ -5,27 +5,26 @@ Inherits AWS_Common_Request
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.
 		  Super.Constructor
+		  self.ExpectedReplyName = "ListAllMyBucketsResult"
+		  
+		  
 		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function ExtractBucketListFromXML(theXMLStr as String) As AWS_S3_Item()
-		  const XMLStrStart as string = "<?xml version=""1.0"" encoding=""UTF-8""?> <ListAllMyBucketsResult"
+		Shared Function ExtractBucketListFromXML(theXMLDoc as XMLDocument) As AWS_S3_Item()
+		  const ExpectedXMLName as string = "ListAllMyBucketsResult"
 		  
 		  dim retList() as AWS_S3_item
 		  
+		  Dim tmp_xml_doc As XmlDocument = theXMLDoc
 		  
-		  if left(theXMLStr.trim(), len(XMLStrStart)) <> XMLStrStart then
+		  if tmp_xml_doc.FirstChild.name <> ExpectedXMLName then
 		    return retList
 		    
 		  end if
 		  
-		  
-		  
-		  dim tmp_xml_str as String = theXMLStr
-		  
-		  Dim tmp_xml_doc As New XmlDocument( tmp_xml_str )
 		  
 		  dim ownerID as string
 		  
@@ -68,8 +67,9 @@ Inherits AWS_Common_Request
 		  
 		  super.SendRequest(server,"")
 		  
-		  if len(self.ReplyText)>0 then
-		    tmp = ExtractBucketListFromXML(self.ReplyText)
+		  if self.ReplyXMLDoc <> nil and self.GetXMLReplyName() = self.ExpectedReplyName then
+		    
+		    tmp = ExtractBucketListFromXML(self.ReplyXMLDoc)
 		    
 		  end if
 		  
@@ -82,9 +82,16 @@ Inherits AWS_Common_Request
 
 	#tag ViewBehavior
 		#tag ViewProperty
+			Name="ExpectedReplyName"
+			Group="Behavior"
+			Type="string"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="HTTPMethod"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -110,11 +117,13 @@ Inherits AWS_Common_Request
 			Name="ReplyText"
 			Group="Behavior"
 			Type="string"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="RequestPayload"
 			Group="Behavior"
 			Type="string"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
@@ -133,6 +142,7 @@ Inherits AWS_Common_Request
 			Name="URI"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

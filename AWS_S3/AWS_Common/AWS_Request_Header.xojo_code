@@ -1,19 +1,25 @@
 #tag Class
-Protected Class AWS_S3_item
+Protected Class AWS_Request_Header
 	#tag Method, Flags = &h0
-		Sub Constructor(theName as string = "")
+		Function Clone() As AWS_Request_Header
+		  Return new AWS_Request_Header(self.Name, Self.Value, Self.AddToSignature)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Constructor(theName as string, theValue as String, IncludeInSignature as Boolean)
 		  self.Name = theName
+		  self.Value = theValue
+		  self.AddToSignature = IncludeInSignature
+		  
 		  
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		CreationDate As string
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ModificationDate As string
+		AddToSignature As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -21,24 +27,15 @@ Protected Class AWS_S3_item
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Owner As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Size As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		StorageClass As string
+		Value As string
 	#tag EndProperty
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="CreationDate"
+			Name="AddToSignature"
 			Group="Behavior"
-			Type="string"
-			EditorType="MultiLineEditor"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -55,12 +52,6 @@ Protected Class AWS_S3_item
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ModificationDate"
-			Group="Behavior"
-			Type="string"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
@@ -70,23 +61,6 @@ Protected Class AWS_S3_item
 			Name="Name"
 			Group="Behavior"
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Owner"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Size"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="StorageClass"
-			Group="Behavior"
-			Type="string"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
@@ -100,6 +74,12 @@ Protected Class AWS_S3_item
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Value"
+			Group="Behavior"
+			Type="string"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

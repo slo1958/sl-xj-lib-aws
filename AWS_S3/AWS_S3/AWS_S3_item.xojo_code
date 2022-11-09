@@ -1,13 +1,5 @@
 #tag Class
 Protected Class AWS_S3_item
-	#tag Method, Flags = &h0
-		Sub Constructor(theName as string = "")
-		  self.Name = theName
-		  
-		End Sub
-	#tag EndMethod
-
-
 	#tag Property, Flags = &h0
 		CreationDate As string
 	#tag EndProperty

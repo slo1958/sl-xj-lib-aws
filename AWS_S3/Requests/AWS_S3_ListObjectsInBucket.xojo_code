@@ -6,18 +6,23 @@ Inherits AWS_Common_Request
 		  // Calling the overridden superclass constructor.
 		  Super.Constructor
 		  BucketName = theBucket
-		  
+		  self.ExpectedReplyName = "ListBucketResult"
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function ExtractObjectInfoFromXML(theXMLStr as String) As AWS_S3_item()
+		Shared Function ExtractObjectInfoFromXML(theXMLDoc as XMLDocument) As AWS_S3_item()
+		  const ExpectedXMLName as string = "ListBucketResult"
 		  
 		  dim retList() as AWS_S3_item
 		  
-		  dim tmp_xml_str as String = theXMLStr
+		  Dim tmp_xml_doc As  XmlDocument = theXMLDoc
 		  
-		  Dim tmp_xml_doc As New XmlDocument( tmp_xml_str )
+		  
+		  if tmp_xml_doc.FirstChild.name <> ExpectedXMLName then
+		    return retList
+		    
+		  end if
 		  
 		  
 		  Dim nodes As XmlNodeList
@@ -54,8 +59,8 @@ Inherits AWS_Common_Request
 		  
 		  super.SendRequest(server, tmp_host_prefix)
 		  
-		  if len(self.ReplyText)>0 then
-		    tmp = ExtractObjectInfoFromXML(self.ReplyText)
+		  if self.ReplyXMLDoc <> nil and self.GetXMLReplyName() = self.ExpectedReplyName then
+		    tmp = ExtractObjectInfoFromXML(self.ReplyXMLDoc)
 		    
 		  end if
 		  
@@ -73,6 +78,18 @@ Inherits AWS_Common_Request
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="BucketName"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ExpectedReplyName"
+			Group="Behavior"
+			Type="string"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HTTPMethod"
 			Group="Behavior"

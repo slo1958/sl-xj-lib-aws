@@ -1,56 +1,85 @@
 #tag Class
-Protected Class AWS_S3_GetObject
+Protected Class AWS_S3_ListBuckets
 Inherits AWS_Common_Request
 	#tag Method, Flags = &h0
-		Sub Constructor(theBucket as string, theObjectKey as string)
+		Sub Constructor()
 		  // Calling the overridden superclass constructor.
 		  Super.Constructor
-		  BucketName = theBucket
-		  ObjectKey = theObjectKey
+		  self.ExpectedReplyName = "ListAllMyBucketsResult"
+		  
+		  
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SendRequest(server as AWS_Common_Host) As String
+		Shared Function ExtractBucketListFromXML(theXMLDoc as XMLDocument) As AWS_S3_Item()
+		  const ExpectedXMLName as string = "ListAllMyBucketsResult"
 		  
-		  dim tmp_host_prefix as string = self.BucketName + "." 
+		  dim retList() as AWS_S3_item
 		  
-		  self.URI = self.ObjectKey
+		  Dim tmp_xml_doc As XmlDocument = theXMLDoc
 		  
-		  if self.URI.left(1) <> "/" then
-		    self.URI = "/" + self.URI
+		  if tmp_xml_doc.FirstChild.name <> ExpectedXMLName then
+		    return retList
 		    
 		  end if
 		  
-		  super.SendRequest(server,tmp_host_prefix)
 		  
-		  if self.ReplyXMLDoc = nil and len(self.ReplyText)>0 then
-		    return DefineEncoding(self.ReplyText, Encodings.UTF8)
+		  dim ownerID as string
+		  
+		  Dim nodes As XmlNodeList
+		  
+		  nodes = tmp_xml_doc.XQL("//Owner")
+		  
+		  for i as integer = 0 to nodes.Length-1
+		    dim  node as XmlNode = nodes.item(i)
+		    ownerID = GetValueFromXMLNode(node,"ID")
 		    
-		  else
-		    return ""
+		  next
+		  
+		  
+		  nodes = tmp_xml_doc.XQL("//Bucket")
+		  
+		  for i as integer = 0 to nodes.Length-1
+		    dim  node as XmlNode = nodes.item(i)
+		    
+		    dim obj as new AWS_S3_item
+		    obj.Name = GetValueFromXMLNode(node, "Name")
+		    obj.CreationDate= GetValueFromXMLNode(node, "CreationDate")
+		    obj.Owner = ownerID
+		    
+		    if obj.Name.Len > 0 then
+		      retList.Append(obj)
+		      
+		    end if
+		    
+		  next
+		  
+		  return retList
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function SendRequest(server as AWS_Common_Host) As AWS_S3_Item()
+		  dim tmp() as AWS_S3_item
+		  
+		  super.SendRequest(server,"")
+		  
+		  if self.ReplyXMLDoc <> nil then
+		    tmp = ExtractBucketListFromXML(self.ReplyXMLDoc)
 		    
 		  end if
+		  
+		  return tmp
+		  
 		  
 		End Function
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h0
-		BucketName As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ObjectKey As String
-	#tag EndProperty
-
-
 	#tag ViewBehavior
-		#tag ViewProperty
-			Name="BucketName"
-			Group="Behavior"
-			Type="String"
-		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ExpectedReplyName"
 			Group="Behavior"
@@ -81,11 +110,6 @@ Inherits AWS_Common_Request
 			Name="Name"
 			Visible=true
 			Group="ID"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ObjectKey"
-			Group="Behavior"
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty

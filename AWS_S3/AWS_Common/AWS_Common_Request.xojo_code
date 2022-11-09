@@ -196,11 +196,6 @@ Protected Class AWS_Common_Request
 		  if self.ReplyText.left(6)="<?xml "  then
 		    Self.ReplyXMLDoc = New XmlDocument(self.ReplyText)
 		    
-		    if self.GetXMLReplyName() = "Error" then
-		      self.ErrorInfo = new AWS_Error_info(self.ReplyXMLDoc)
-		      
-		    end if
-		    
 		  else
 		    self.ReplyXMLDoc = nil
 		    
@@ -209,10 +204,6 @@ Protected Class AWS_Common_Request
 		End Sub
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h0
-		ErrorInfo As AWS_Error_info
-	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		ExpectedReplyName As string

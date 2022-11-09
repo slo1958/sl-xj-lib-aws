@@ -24,13 +24,14 @@ Inherits AWS_Common_Request
 		  
 		  super.SendRequest(server,tmp_host_prefix)
 		  
-		  if self.ReplyXMLDoc = nil and len(self.ReplyText)>0 then
+		  if len(self.ReplyText)>0 then
 		    return DefineEncoding(self.ReplyText, Encodings.UTF8)
 		    
 		  else
 		    return ""
 		    
 		  end if
+		  
 		  
 		End Function
 	#tag EndMethod
@@ -50,6 +51,7 @@ Inherits AWS_Common_Request
 			Name="BucketName"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ExpectedReplyName"
@@ -87,6 +89,7 @@ Inherits AWS_Common_Request
 			Name="ObjectKey"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ReplyText"
