@@ -494,6 +494,8 @@ Protected Class AWS_Common_Host
 		  
 		  
 		  dim ct as new HTTPSecureSocket
+		  ct.ConnectionType = SSLSocket.TLSv12 ' TLS below 1.2 deprecated by Amazon in Nov 2022
+		  
 		  ct.ClearRequestHeaders
 		  ct.requestHeaders.AppendHeader("User-Agent","Mozilla/5.0")
 		  ct.requestHeaders.AppendHeader("Date",TimeStampRFC7231(self.RequestDateTime))
