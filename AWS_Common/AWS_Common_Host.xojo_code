@@ -405,6 +405,18 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Shared Function LoadCredentials(credentials_group as string = "default") As Dictionary
+		  //
+		  // Credential file example:
+		  //
+		  // [default]
+		  // aws_access_key_id = <access key_id>
+		  // aws_secret_access_key = <access key secret>
+		  // aws_region = <aws region>
+		  //
+		  
+		  
+		  
+		  
 		  dim search_str as string = credentials_group
 		  
 		  dim dct as new Dictionary
@@ -658,25 +670,33 @@ Protected Class AWS_Common_Host
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="AWSAccessKeyId"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSRegion"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSSecretAccessKey"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSService"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -686,6 +706,7 @@ Protected Class AWS_Common_Host
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -693,18 +714,23 @@ Protected Class AWS_Common_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -712,6 +738,7 @@ Protected Class AWS_Common_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

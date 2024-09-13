@@ -34,7 +34,7 @@ Inherits AWS_Common_Request
 		    
 		    dim obj as new AWS_S3_item
 		    obj.Name = GetValueFromXMLNode(node, "Key")
-		    obj.ModificationDate= GetValueFromXMLNode(node, "LastModified")
+		    obj.ModificationDateStr= GetValueFromXMLNode(node, "LastModified")
 		    obj.Size = val(GetValueFromXMLNode(node,"Size"))
 		    obj.StorageClass =  GetValueFromXMLNode(node, "StorageClass")
 		    obj.Owner = GetValueFromXMLNode(GetChildNodeFromXMLNode(node,"Owner"), "ID")
@@ -80,19 +80,25 @@ Inherits AWS_Common_Request
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="BucketName"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ExpectedReplyName"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HTTPMethod"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -102,6 +108,7 @@ Inherits AWS_Common_Request
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -109,22 +116,29 @@ Inherits AWS_Common_Request
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ReplyText"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="RequestPayload"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -132,7 +146,9 @@ Inherits AWS_Common_Request
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -140,10 +156,13 @@ Inherits AWS_Common_Request
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="URI"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty

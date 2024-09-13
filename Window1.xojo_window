@@ -3,7 +3,6 @@ Begin Window Window1
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
-   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -11,7 +10,7 @@ Begin Window Window1
    HasBackColor    =   False
    Height          =   680
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   True
@@ -68,7 +67,9 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   156
+      Transparent     =   False
       Underline       =   False
+      UnicodeMode     =   0
       UseFocusRing    =   True
       Visible         =   True
       Width           =   560
@@ -117,6 +118,7 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   404
+      Transparent     =   False
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -127,7 +129,7 @@ Begin Window Window1
    Begin PushButton pb_buckets
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
+      ButtonStyle     =   0
       Cancel          =   False
       Caption         =   "Buckets"
       Default         =   False
@@ -151,16 +153,17 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   50
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton pb_objects
+   Begin PushButton pb_objects_ok
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
+      ButtonStyle     =   0
       Cancel          =   False
-      Caption         =   "Objects"
+      Caption         =   "Objects OK"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -182,16 +185,17 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   50
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   105
    End
-   Begin PushButton PushButton1
+   Begin PushButton pb_single_object_ok
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
+      ButtonStyle     =   0
       Cancel          =   False
-      Caption         =   "Button"
+      Caption         =   "One object OK"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -213,9 +217,10 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   50
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   143
    End
    Begin Label Label1
       AutoDeactivate  =   True
@@ -287,12 +292,12 @@ Begin Window Window1
       Visible         =   True
       Width           =   352
    End
-   Begin PushButton pb_objects1
+   Begin PushButton pb_objects_not_ok
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
+      ButtonStyle     =   0
       Cancel          =   False
-      Caption         =   "Objects"
+      Caption         =   "Objects ERR"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -314,16 +319,17 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   82
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   104
    End
-   Begin PushButton PushButton2
+   Begin PushButton pb_single_object_not_ok_1
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
+      ButtonStyle     =   0
       Cancel          =   False
-      Caption         =   "Button"
+      Caption         =   "One object not ok (1)"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -345,16 +351,17 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   82
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   143
    End
-   Begin PushButton PushButton3
+   Begin PushButton pb_single_object_not_ok_2
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
+      ButtonStyle     =   0
       Cancel          =   False
-      Caption         =   "Button"
+      Caption         =   "One object not ok (2)"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -376,9 +383,10 @@ Begin Window Window1
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   114
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   143
    End
 End
 #tag EndWindow
@@ -424,7 +432,12 @@ End
 		  
 		  for each item as AWS_S3_item in list_of_buckets
 		    listbox1.AddRow item.name
-		    listbox1.Cell(Listbox1.LastIndex, 1) = item.CreationDate
+		    try
+		      listbox1.Cell(Listbox1.LastIndex, 1) = item.CreationDate.SQLDateTime
+		    catch
+		      listbox1.Cell(Listbox1.LastIndex, 1) = "-"
+		      
+		    end try
 		    
 		  next
 		  
@@ -432,10 +445,12 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events pb_objects
+#tag Events pb_objects_ok
 	#tag Event
 		Sub Action()
-		  
+		  //
+		  // Request objects in a bucket
+		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
 		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001")
@@ -461,7 +476,12 @@ End
 		  
 		  for each item as AWS_S3_item in lst
 		    listbox1.AddRow item.name
-		    listbox1.Cell(Listbox1.LastIndex, 1) = item.ModificationDate
+		    try
+		      listbox1.Cell(Listbox1.LastIndex, 1) = item.ModificationDate.SQLDateTime
+		    catch
+		      listbox1.Cell(Listbox1.LastIndex, 1) = "-"
+		    end try
+		    
 		    Listbox1.cell(Listbox1.LastIndex,2) = str(item.Size)
 		    
 		  next
@@ -470,10 +490,12 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton1
+#tag Events pb_single_object_ok
 	#tag Event
 		Sub Action()
-		  
+		  //
+		  // Request an existing object in an existing  bucket
+		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
 		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.h")
@@ -497,10 +519,12 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events pb_objects1
+#tag Events pb_objects_not_ok
 	#tag Event
 		Sub Action()
-		  
+		  //
+		  // Request objects in a non existant bucket
+		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
 		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001xx")
@@ -525,7 +549,12 @@ End
 		  
 		  for each item as AWS_S3_item in lst
 		    listbox1.AddRow item.name
-		    listbox1.Cell(Listbox1.LastIndex, 1) = item.ModificationDate
+		    try
+		      listbox1.Cell(Listbox1.LastIndex, 1) = item.ModificationDate.SQLDateTime
+		    catch
+		      listbox1.Cell(Listbox1.LastIndex, 1) = "-"
+		    end try
+		    
 		    Listbox1.cell(Listbox1.LastIndex,2) = str(item.Size)
 		    
 		  next
@@ -534,10 +563,12 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton2
+#tag Events pb_single_object_not_ok_1
 	#tag Event
 		Sub Action()
-		  
+		  //
+		  // Request a non existing object in an existing  bucket
+		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
 		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.hxyz")
@@ -561,10 +592,12 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton3
+#tag Events pb_single_object_not_ok_2
 	#tag Event
 		Sub Action()
-		  
+		  //
+		  // Request an object in a non existing  bucket
+		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
 		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001xyz","I2C/i2c.h")
@@ -590,39 +623,43 @@ End
 #tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
-		Name="BackColor"
+		Name="MinimumWidth"
 		Visible=true
-		Group="Background"
-		InitialValue="&hFFFFFF"
-		Type="Color"
+		Group="Size"
+		InitialValue="64"
+		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Backdrop"
+		Name="MinimumHeight"
 		Visible=true
-		Group="Background"
-		Type="Picture"
-		EditorType="Picture"
+		Group="Size"
+		InitialValue="64"
+		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="CloseButton"
+		Name="MaximumWidth"
 		Visible=true
-		Group="Frame"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
+		Group="Size"
+		InitialValue="32000"
+		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Composite"
-		Group="OS X (Carbon)"
-		InitialValue="False"
-		Type="Boolean"
+		Name="MaximumHeight"
+		Visible=true
+		Group="Size"
+		InitialValue="32000"
+		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Frame"
+		Name="Type"
 		Visible=true
 		Group="Frame"
 		InitialValue="0"
-		Type="Integer"
+		Type="Types"
 		EditorType="Enum"
 		#tag EnumValues
 			"0 - Document"
@@ -639,134 +676,43 @@ End
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="FullScreen"
-		Group="Behavior"
-		InitialValue="False"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="FullScreenButton"
-		Visible=true
-		Group="Frame"
-		InitialValue="False"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="HasBackColor"
-		Visible=true
-		Group="Background"
-		InitialValue="False"
-		Type="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Height"
-		Visible=true
-		Group="Size"
-		InitialValue="400"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="ImplicitInstance"
-		Visible=true
-		Group="Behavior"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Interfaces"
-		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="LiveResize"
-		Group="Behavior"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MacProcID"
-		Group="OS X (Carbon)"
-		InitialValue="0"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MaxHeight"
-		Visible=true
-		Group="Size"
-		InitialValue="32000"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MaximizeButton"
+		Name="HasCloseButton"
 		Visible=true
 		Group="Frame"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MaxWidth"
-		Visible=true
-		Group="Size"
-		InitialValue="32000"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MenuBar"
-		Visible=true
-		Group="Menus"
-		Type="MenuBar"
-		EditorType="MenuBar"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MenuBarVisible"
-		Visible=true
-		Group="Deprecated"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MinHeight"
-		Visible=true
-		Group="Size"
-		InitialValue="64"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MinimizeButton"
+		Name="HasMaximizeButton"
 		Visible=true
 		Group="Frame"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MinWidth"
+		Name="HasMinimizeButton"
 		Visible=true
-		Group="Size"
-		InitialValue="64"
-		Type="Integer"
+		Group="Frame"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Name"
+		Name="HasFullScreenButton"
 		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
+		Group="Frame"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Placement"
+		Name="DefaultLocation"
 		Visible=true
 		Group="Behavior"
 		InitialValue="0"
-		Type="Integer"
+		Type="Locations"
 		EditorType="Enum"
 		#tag EnumValues
 			"0 - Default"
@@ -777,19 +723,116 @@ End
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="HasBackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="BackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		EditorType="Color"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Background"
+		InitialValue=""
+		Type="Picture"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Composite"
+		Visible=false
+		Group="OS X (Carbon)"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="FullScreen"
+		Visible=false
+		Group="Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Size"
+		InitialValue="400"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ImplicitInstance"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Interfaces"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MacProcID"
+		Visible=false
+		Group="OS X (Carbon)"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBar"
+		Visible=true
+		Group="Menus"
+		InitialValue=""
+		Type="MenuBar"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBarVisible"
+		Visible=true
+		Group="Deprecated"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Resizeable"
 		Visible=true
 		Group="Frame"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Super"
 		Visible=true
 		Group="ID"
+		InitialValue=""
 		Type="String"
-		EditorType="String"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Title"
@@ -797,6 +840,7 @@ End
 		Group="Frame"
 		InitialValue="Untitled"
 		Type="String"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Visible"
@@ -804,7 +848,7 @@ End
 		Group="Behavior"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Width"
@@ -812,5 +856,6 @@ End
 		Group="Size"
 		InitialValue="600"
 		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 #tag EndViewBehavior
