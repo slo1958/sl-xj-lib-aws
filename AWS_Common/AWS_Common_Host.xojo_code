@@ -34,8 +34,7 @@ Protected Class AWS_Common_Host
 		  self.AWSAccessKeyId = credentials.value("aws_access_key_id")
 		  self.AWSSecretAccessKey = credentials.value("aws_secret_access_key")
 		  self.AWSRegion = credentials.lookup("aws_region", "us-east-1")
-		  
-		  
+		  self.AWSService = "??"
 		  
 		  
 		  
@@ -45,10 +44,10 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Sub Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string="us-east-1")
-		  AWSAccessKeyId = theAWSAccessKeyId.trim()
-		  AWSSecretAccessKey = theAWSSecretKey.trim()
-		  AWSRegion = theRegion.trim() 
-		  AWSService = "??"
+		  self.AWSAccessKeyId = theAWSAccessKeyId.trim()
+		  self.AWSSecretAccessKey = theAWSSecretKey.trim()
+		  self.AWSRegion = theRegion.trim() 
+		  self.AWSService = "??"
 		End Sub
 	#tag EndMethod
 
@@ -478,7 +477,7 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Function Request(HTTPMethod as string, Host as string, URI as String, QueryParams as dictionary, UserHeaders() as AWS_Request_Header, payload as string) As AWS_Reply
 		  
-		  self.RequestDateTime = new date()
+		  self.RequestDateTime = new date() // 2024,9,14,21,55,28,0)
 		  
 		  '
 		  ' Add AWS headers
@@ -517,6 +516,11 @@ Protected Class AWS_Common_Host
 		    ct.requestHeaders.AppendHeader(header.Name, header.Value)
 		    
 		  next
+		  
+		  if payload.Len>0 then
+		    ct.SetRequestContent(payload, "")
+		    
+		  end if
 		  
 		  dim url as string = host + uri ' "s3.eu-west-3.amazonaws.com"
 		  

@@ -388,18 +388,70 @@ Begin Window Window1
       Visible         =   True
       Width           =   143
    End
+   Begin PushButton pb_put_object
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   False
+      Caption         =   "Put Objects OK"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   458
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   50
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   105
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Event
 		Sub Open()
+		  
 		  dim s3 as new AWS_S3_Test
 		  
-		  s3.test_all
+		  //s3.test_all
 		  
 		End Sub
 	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Function get_object_text() As string
+		  // 
+		  // load sample data
+		  //
+		  
+		  dim txt_buffer as string = myfile3_10K_tab
+		  
+		  return txt_buffer
+		  
+		  
+		End Function
+	#tag EndMethod
+
+
+	#tag Constant, Name = DefaultBucket, Type = String, Dynamic = False, Default = \"sl58-aws-bucket-001", Scope = Public
+	#tag EndConstant
 
 
 #tag EndWindowCode
@@ -453,7 +505,7 @@ End
 		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001")
+		  dim s3_request as new AWS_S3_ListObjectsInBucket(DefaultBucket)
 		  
 		  dim lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
@@ -498,7 +550,7 @@ End
 		  //
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.h")
+		  dim s3_request as new AWS_S3_GetObject(DefaultBucket,"I2C/i2c.h")
 		  
 		  dim tmp as string = s3_request.SendRequest(s3_host)
 		  
@@ -617,6 +669,41 @@ End
 		    TextArea1.text = s3_request.ReplyText
 		    
 		  end if
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pb_put_object
+	#tag Event
+		Sub Action()
+		  //
+		  // Request objects in a bucket
+		  //
+		  
+		  
+		  var ObjText as string = get_object_text
+		  var ObjName as string = "MyObject"+DateTime.Now.SQLDateTime.ReplaceAll(":","-").replaceall(" ","-")
+		  
+		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  
+		  dim s3_request as new AWS_S3_PutObject(DefaultBucket, AWS_S3_PutObject.EncodeName(ObjName), ObjText)
+		  
+		  dim ret_status as string  = s3_request.SendRequest(s3_host)
+		  
+		  
+		  if s3_request.ErrorInfo = nil then
+		    label1.Text = ""
+		    label2.Text = ""
+		    
+		  else
+		    label1.text = s3_request.ErrorInfo.Code
+		    label2.text = s3_request.ErrorInfo.Message
+		    
+		  end if
+		  
+		  
+		  TextArea1.text =  ret_status
+		  
 		  
 		End Sub
 	#tag EndEvent

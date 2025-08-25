@@ -3,7 +3,15 @@ Protected Class AWS_S3_GetObject
 Inherits AWS_Common_Request
 	#tag Method, Flags = &h0
 		Sub Constructor(theBucket as string, theObjectKey as string)
-		  // Calling the overridden superclass constructor.
+		  //
+		  // Requests to get an object from a bucket
+		  //
+		  // Paramters:
+		  // - name of the bucket
+		  // - name of the object
+		  //
+		  
+		  
 		  Super.Constructor
 		  BucketName = theBucket
 		  ObjectKey = theObjectKey
@@ -12,6 +20,17 @@ Inherits AWS_Common_Request
 
 	#tag Method, Flags = &h0
 		Function SendRequest(server as AWS_Common_Host) As String
+		  //
+		  // sends the request to get the object specified when calling the constructor
+		  // returns the object as a string
+		  //
+		  // Parameters:
+		  //.     - server to send the request to
+		  //
+		  //
+		  // Returns:
+		  //  Object received from the server or an empty string
+		  //
 		  
 		  dim tmp_host_prefix as string = self.BucketName + "." 
 		  
@@ -48,18 +67,25 @@ Inherits AWS_Common_Request
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="BucketName"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ExpectedReplyName"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HTTPMethod"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -69,6 +95,7 @@ Inherits AWS_Common_Request
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -76,27 +103,37 @@ Inherits AWS_Common_Request
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ObjectKey"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ReplyText"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="RequestPayload"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -104,7 +141,9 @@ Inherits AWS_Common_Request
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -112,10 +151,13 @@ Inherits AWS_Common_Request
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="URI"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty

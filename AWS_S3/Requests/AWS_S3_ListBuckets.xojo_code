@@ -3,7 +3,14 @@ Protected Class AWS_S3_ListBuckets
 Inherits AWS_Common_Request
 	#tag Method, Flags = &h0
 		Sub Constructor()
-		  // Calling the overridden superclass constructor.
+		  //
+		  // Requests to get the list of buckets
+		  //
+		  // Paramters:
+		  // - name of the bucket
+		  // - name of the object
+		  //
+		  
 		  Super.Constructor
 		  self.ExpectedReplyName = "ListAllMyBucketsResult"
 		  
@@ -63,6 +70,18 @@ Inherits AWS_Common_Request
 
 	#tag Method, Flags = &h0
 		Function SendRequest(server as AWS_Common_Host) As AWS_S3_Item()
+		  //
+		  // sends the request to get the list of buckets
+		  // returns the list of buckets
+		  //
+		  // Parameters:
+		  //.     - server to send the request to
+		  //
+		  //
+		  // Returns:
+		  //  List of buckets as an array of AWS_S3_Item
+		  //
+		  
 		  dim tmp() as AWS_S3_item
 		  
 		  super.SendRequest(server,"")

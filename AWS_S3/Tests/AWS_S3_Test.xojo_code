@@ -461,6 +461,9 @@ Inherits AWS_S3_Host
 		  for each one_result as string in test_results
 		    nb_tests = nb_tests + 1
 		    
+		    //
+		    //each test method returns the name of the method, the actual results, the expected results and the status / tab separated string
+		    //
 		    dim item() as string  = one_result.split(chr(9))
 		    if item(3) = "True" then
 		      nb_ok = nb_ok + 1
@@ -482,25 +485,33 @@ Inherits AWS_S3_Host
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="AWSAccessKeyId"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSRegion"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSSecretAccessKey"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSService"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -510,6 +521,7 @@ Inherits AWS_S3_Host
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -517,18 +529,23 @@ Inherits AWS_S3_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -536,6 +553,7 @@ Inherits AWS_S3_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

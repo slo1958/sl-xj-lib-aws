@@ -61,6 +61,14 @@ Protected Class AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Shared Function EncodeName(originalName as string) As string
+		  
+		  return EncodeURLComponent(originalName)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Shared Function GetChildNodeFromXMLNode(theNode as XMLNode, theChildName as string) As XmlNode
 		  dim tmp_src_node as XmlNode = theNode
 		  
@@ -209,6 +217,18 @@ Protected Class AWS_Common_Request
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub SetPayload(thePayload as string)
+		  self.RequestPayload = thePayload
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub UpdateHTTPMethod(newHTTPMethod as string)
+		  self.HTTPMethod=newHTTPMethod
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		ErrorInfo As AWS_Error_info
@@ -254,13 +274,17 @@ Protected Class AWS_Common_Request
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="ExpectedReplyName"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HTTPMethod"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -270,6 +294,7 @@ Protected Class AWS_Common_Request
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -277,22 +302,29 @@ Protected Class AWS_Common_Request
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ReplyText"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="RequestPayload"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -300,7 +332,9 @@ Protected Class AWS_Common_Request
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -308,10 +342,13 @@ Protected Class AWS_Common_Request
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="URI"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
