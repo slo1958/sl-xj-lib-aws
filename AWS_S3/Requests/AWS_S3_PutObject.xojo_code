@@ -48,7 +48,7 @@ Inherits AWS_Common_Request
 		  // need to update the default http method 
 		  super.UpdateHTTPMethod("PUT")
 		  self.SetPayload( self.ObjectBody)
-		  self.UserRequestHeaders.Add( new AWS_Request_Header("Content-length",str(self.ObjectBody.Len), False))
+		  self.UserRequestHeaders.Add( new AWS_Request_Header("Content-length",str(self.ObjectBody.LenB), False))
 		  super.SendRequest(server,tmp_host_prefix)
 		  
 		  return DefineEncoding(self.ReplyText, Encodings.UTF8)
