@@ -503,32 +503,36 @@ Protected Class AWS_Common_Host
 		  
 		  dim tmp_authorization as String = self.GetAuthorisationStr(tmp_method, tmp_host, tmp_uri, QueryParams, Headers, payload_hash, self.RequestDateTime)
 		  
+		  var ct as new URLConnection
 		  
-		  dim ct as new HTTPSecureSocket
-		  ct.ConnectionType = SSLSocket.TLSv12 ' TLS below 1.2 deprecated by Amazon in Nov 2022
 		  
 		  ct.ClearRequestHeaders
-		  ct.requestHeaders.AppendHeader("User-Agent","Mozilla/5.0")
-		  ct.requestHeaders.AppendHeader("Date",TimeStampRFC7231(self.RequestDateTime))
-		  ct.requestHeaders.AppendHeader("Authorization", tmp_authorization)
+		  
+		  ct.requestHeader("User-Agent") = "Mozilla/5.0"
+		  ct.requestHeader("Date") = TimeStampRFC7231(self.RequestDateTime)
+		  ct.requestHeader("Authorization") =  tmp_authorization
 		  
 		  for each header as AWS_Request_Header in headers
-		    ct.requestHeaders.AppendHeader(header.Name, header.Value)
+		    ct.requestHeader(header.Name) =  header.Value
 		    
 		  next
 		  
 		  if payload.Len>0 then
-		    ct.SetRequestContent(payload, "")
+		    ct.SetRequestContent(payload, "application/text")
 		    
 		  end if
 		  
-		  dim url as string = host + uri ' "s3.eu-west-3.amazonaws.com"
+		  dim url as string = "https://" +  host + uri ' "s3.eu-west-3.amazonaws.com"
 		  
 		  dim timeout as integer = 30
 		  dim reply as new AWS_Reply
 		  
-		  reply.ReplyText = ct.SendRequest(HTTPMethod, url, timeout)
-		  reply.Headers= ct.PageHeaders
+		  reply.ReplyText = ct.SendSync(HTTPMethod, url, timeout)
+		  
+		  For Each header As Pair In ct.ResponseHeaders
+		    reply.Header(header.Left) = header.Right
+		    
+		  Next 
 		  
 		  return reply
 		  

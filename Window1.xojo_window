@@ -443,7 +443,7 @@ End
 		  
 		  dim txt_buffer as string = myfile3_10K_tab
 		  
-		  return txt_buffer
+		  return txt_buffer.ReplaceAll(chr(13),"")
 		  
 		  
 		End Function
@@ -682,7 +682,7 @@ End
 		  
 		  
 		  var ObjText as string = get_object_text
-		  var ObjName as string = "MyObject"+DateTime.Now.SQLDateTime.ReplaceAll(":","-").replaceall(" ","-")
+		  var ObjName as string = "MyObject_2025-08-24" //+DateTime.Now.SQLDateTime.ReplaceAll(":","-").replaceall(" ","-")
 		  
 		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  

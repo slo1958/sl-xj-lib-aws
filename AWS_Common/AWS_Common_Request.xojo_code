@@ -5,6 +5,8 @@ Protected Class AWS_Common_Request
 		  HTTPMethod = "GET"
 		  URI = "/"
 		  QueryParams = new Dictionary
+		  ReplyHeaders = new Dictionary
+		  
 		End Sub
 	#tag EndMethod
 
@@ -247,7 +249,7 @@ Protected Class AWS_Common_Request
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ReplyHeaders As InternetHeaders
+		ReplyHeaders As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

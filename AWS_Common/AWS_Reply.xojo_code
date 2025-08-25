@@ -1,7 +1,17 @@
 #tag Class
 Protected Class AWS_Reply
+	#tag Method, Flags = &h0
+		Sub Header(HeaderLabel as string, assigns HeaderValue as String)
+		  if headers  = nil then headers = new Dictionary
+		  
+		  headers.Value(HeaderLabel) = HeaderValue
+		  
+		End Sub
+	#tag EndMethod
+
+
 	#tag Property, Flags = &h0
-		Headers As InternetHeaders
+		Headers As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -16,6 +26,7 @@ Protected Class AWS_Reply
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -23,23 +34,31 @@ Protected Class AWS_Reply
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ReplyText"
+			Visible=false
 			Group="Behavior"
-			Type="Integer"
+			InitialValue=""
+			Type="string"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -47,6 +66,7 @@ Protected Class AWS_Reply
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
