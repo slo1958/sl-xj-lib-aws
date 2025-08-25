@@ -23,9 +23,9 @@ Inherits AWS_Common_Request
 		Shared Function ExtractBucketListFromXML(theXMLDoc as XMLDocument) As AWS_S3_Item()
 		  const ExpectedXMLName as string = "ListAllMyBucketsResult"
 		  
-		  dim retList() as AWS_S3_item
+		  var retList() as AWS_S3_item
 		  
-		  Dim tmp_xml_doc As XmlDocument = theXMLDoc
+		  var tmp_xml_doc As XmlDocument = theXMLDoc
 		  
 		  if tmp_xml_doc.FirstChild.name <> ExpectedXMLName then
 		    return retList
@@ -33,14 +33,14 @@ Inherits AWS_Common_Request
 		  end if
 		  
 		  
-		  dim ownerID as string
+		  var ownerID as string
 		  
-		  Dim nodes As XmlNodeList
+		  var nodes As XmlNodeList
 		  
 		  nodes = tmp_xml_doc.XQL("//Owner")
 		  
 		  for i as integer = 0 to nodes.Length-1
-		    dim  node as XmlNode = nodes.item(i)
+		    var  node as XmlNode = nodes.item(i)
 		    ownerID = GetValueFromXMLNode(node,"ID")
 		    
 		  next
@@ -49,9 +49,9 @@ Inherits AWS_Common_Request
 		  nodes = tmp_xml_doc.XQL("//Bucket")
 		  
 		  for i as integer = 0 to nodes.Length-1
-		    dim  node as XmlNode = nodes.item(i)
+		    var  node as XmlNode = nodes.item(i)
 		    
-		    dim obj as new AWS_S3_item
+		    var obj as new AWS_S3_item
 		    obj.Name = GetValueFromXMLNode(node, "Name")
 		    obj.CreationDateStr= GetValueFromXMLNode(node, "CreationDate")
 		    obj.Owner = ownerID
@@ -82,7 +82,7 @@ Inherits AWS_Common_Request
 		  //  List of buckets as an array of AWS_S3_Item
 		  //
 		  
-		  dim tmp() as AWS_S3_item
+		  var tmp() as AWS_S3_item
 		  
 		  super.SendRequest(server,"")
 		  

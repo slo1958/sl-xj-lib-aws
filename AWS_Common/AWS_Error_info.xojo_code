@@ -12,14 +12,14 @@ Protected Class AWS_Error_info
 	#tag Method, Flags = &h0
 		Sub DecodeError(theXMLDoc as XMLDocument)
 		  
-		  dim tmp_node0 as XmlNode = theXmlDoc.FirstChild
+		  var tmp_node0 as XmlNode = theXmlDoc.FirstChild
 		  
-		  dim tmp_node1 as XmlNode = tmp_node0.FirstChild
+		  var tmp_node1 as XmlNode = tmp_node0.FirstChild
 		  
 		  while tmp_node1 <> nil 
-		    dim t1 as string = tmp_node1.Name
-		    dim t2 as String = tmp_node1.FirstChild.Value
-		    dim v1 as variant = tmp_node1.Value
+		    var t1 as string = tmp_node1.Name
+		    var t2 as String = tmp_node1.FirstChild.Value
+		    var v1 as variant = tmp_node1.Value
 		    
 		    if t1.trim.Uppercase = "CODE" then
 		      self.code = t2
@@ -59,7 +59,9 @@ Protected Class AWS_Error_info
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="Code"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -69,6 +71,7 @@ Protected Class AWS_Error_info
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -76,10 +79,13 @@ Protected Class AWS_Error_info
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Message"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -87,13 +93,17 @@ Protected Class AWS_Error_info
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -101,6 +111,7 @@ Protected Class AWS_Error_info
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

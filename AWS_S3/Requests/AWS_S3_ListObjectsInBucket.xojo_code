@@ -20,9 +20,9 @@ Inherits AWS_Common_Request
 		Shared Function ExtractObjectInfoFromXML(theXMLDoc as XMLDocument) As AWS_S3_item()
 		  const ExpectedXMLName as string = "ListBucketResult"
 		  
-		  dim retList() as AWS_S3_item
+		  var retList() as AWS_S3_item
 		  
-		  Dim tmp_xml_doc As  XmlDocument = theXMLDoc
+		  var tmp_xml_doc As  XmlDocument = theXMLDoc
 		  
 		  
 		  if tmp_xml_doc.FirstChild.name <> ExpectedXMLName then
@@ -31,14 +31,14 @@ Inherits AWS_Common_Request
 		  end if
 		  
 		  
-		  Dim nodes As XmlNodeList
+		  var nodes As XmlNodeList
 		  nodes = tmp_xml_doc.XQL("//Contents")
 		  
 		  
 		  for i as integer = 0 to nodes.Length-1
-		    dim  node as XmlNode = nodes.item(i)
+		    var  node as XmlNode = nodes.item(i)
 		    
-		    dim obj as new AWS_S3_item
+		    var obj as new AWS_S3_item
 		    obj.Name = GetValueFromXMLNode(node, "Key")
 		    obj.ModificationDateStr= GetValueFromXMLNode(node, "LastModified")
 		    obj.Size = val(GetValueFromXMLNode(node,"Size"))
@@ -71,9 +71,9 @@ Inherits AWS_Common_Request
 		  //  List of objects received from the server as an array of AWS_S3_Item
 		  //
 		  
-		  dim tmp() as AWS_S3_item
+		  var tmp() as AWS_S3_item
 		  
-		  dim tmp_host_prefix as string = self.BucketName + "." 
+		  var tmp_host_prefix as string = self.BucketName + "." 
 		  
 		  super.SendRequest(server, tmp_host_prefix)
 		  

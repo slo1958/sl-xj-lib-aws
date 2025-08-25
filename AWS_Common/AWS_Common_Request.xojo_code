@@ -14,19 +14,19 @@ Protected Class AWS_Common_Request
 		Shared Function DecodeTimeStamp(theTimeStamp as String) As date
 		  'Mon, 07 Nov 2022 11:03:43 GMT
 		  
-		  dim tmp_timestamp as String = theTimeStamp.trim()
+		  var tmp_timestamp as String = theTimeStamp.trim()
 		  
-		  dim tmp_arr() as string = tmp_timestamp.split(" ")
-		  dim tmp_list_month() as String
+		  var tmp_arr() as string = tmp_timestamp.split(" ")
+		  var tmp_list_month() as String
 		  
-		  dim tmp_src as string =  ",Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"
+		  var tmp_src as string =  ",Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"
 		  tmp_list_month = tmp_src.split(",")
 		  
 		  if tmp_arr.Ubound < 5 then
 		    return nil
 		  end if
 		  
-		  dim tmp_month as Integer = tmp_list_month.IndexOf(tmp_arr(2))
+		  var tmp_month as Integer = tmp_list_month.IndexOf(tmp_arr(2))
 		  
 		  if tmp_month <1 then
 		    Return nil 
@@ -39,10 +39,10 @@ Protected Class AWS_Common_Request
 		  end if
 		  
 		  
-		  dim tmp_day as integer = val(tmp_arr(1))
-		  dim tmp_year as integer = val(tmp_arr(3))
+		  var tmp_day as integer = val(tmp_arr(1))
+		  var tmp_year as integer = val(tmp_arr(3))
 		  
-		  dim tmp_str as string =   _
+		  var tmp_str as string =   _
 		  format(tmp_year,"0000") _
 		  + "-" _
 		  + format(tmp_month, "00") _  
@@ -51,7 +51,7 @@ Protected Class AWS_Common_Request
 		  + " " _
 		  + tmp_arr(4)
 		  
-		  dim d as new date
+		  var d as new date
 		  
 		  d.GMTOffset = 0
 		  d.SQLDateTime = tmp_str
@@ -72,11 +72,11 @@ Protected Class AWS_Common_Request
 
 	#tag Method, Flags = &h0
 		Shared Function GetChildNodeFromXMLNode(theNode as XMLNode, theChildName as string) As XmlNode
-		  dim tmp_src_node as XmlNode = theNode
+		  var tmp_src_node as XmlNode = theNode
 		  
-		  dim ret_value as XmlNode
+		  var ret_value as XmlNode
 		  
-		  dim tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
+		  var tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
 		  
 		  while tmp_wrk_node <> nil
 		    if tmp_wrk_node.Name = theChildName then
@@ -103,9 +103,9 @@ Protected Class AWS_Common_Request
 		Function GetReplyDate() As Date
 		  const header_key as string = "Date"
 		  
-		  dim tmp_str as string = self.GetReplyHeaderValue(header_key)
+		  var tmp_str as string = self.GetReplyHeaderValue(header_key)
 		  
-		  dim tmp_date as date = DecodeTimeStamp(tmp_str)
+		  var tmp_date as date = DecodeTimeStamp(tmp_str)
 		  
 		  if tmp_date = nil then
 		    tmp_date = new date(1900,1,1)
@@ -118,7 +118,7 @@ Protected Class AWS_Common_Request
 
 	#tag Method, Flags = &h0
 		Function GetReplyHeaderValue(theHeaderKey as String) As string
-		  dim tmp As String
+		  var tmp As String
 		  
 		  tmp = self.ReplyHeaders.Value(theHeaderKey)
 		  
@@ -147,10 +147,10 @@ Protected Class AWS_Common_Request
 
 	#tag Method, Flags = &h0
 		Shared Function GetValueFromXMLNode(theNode as XMLNode, theItem as string) As String
-		  dim tmp_src_node as XmlNode = theNode
+		  var tmp_src_node as XmlNode = theNode
 		  
-		  dim ret_value as String
-		  dim tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
+		  var ret_value as String
+		  var tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
 		  
 		  while tmp_wrk_node <> nil
 		    if tmp_wrk_node.Name = theItem then
@@ -176,7 +176,7 @@ Protected Class AWS_Common_Request
 		    
 		  end if
 		  
-		  dim tmp as XmlNode =  self.ReplyXMLDoc.FirstChild
+		  var tmp as XmlNode =  self.ReplyXMLDoc.FirstChild
 		  
 		  Return tmp.Name
 		  
@@ -186,15 +186,15 @@ Protected Class AWS_Common_Request
 	#tag Method, Flags = &h0
 		Sub SendRequest(server as AWS_Common_Host, host_prefix as string)
 		  
-		  dim tmp_http_method as string = self.HTTPMethod
-		  dim tmp_host as string = host_prefix + server.getHost
-		  dim tmp_uri as string = self.URI
-		  dim tmp_query_params as  Dictionary = self.QueryParams
-		  dim tmp_headers() as AWS_Request_Header = self.UserRequestHeaders
+		  var tmp_http_method as string = self.HTTPMethod
+		  var tmp_host as string = host_prefix + server.getHost
+		  var tmp_uri as string = self.URI
+		  var tmp_query_params as  Dictionary = self.QueryParams
+		  var tmp_headers() as AWS_Request_Header = self.UserRequestHeaders
 		  
-		  dim tmp_payload as string = self.RequestPayload
+		  var tmp_payload as string = self.RequestPayload
 		  
-		  dim tmp_reply as AWS_Reply
+		  var tmp_reply as AWS_Reply
 		  
 		  tmp_reply = server.Request(tmp_http_method, tmp_host, tmp_uri, tmp_query_params, tmp_headers, tmp_payload)
 		  

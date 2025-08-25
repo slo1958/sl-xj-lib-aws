@@ -4,8 +4,8 @@ Protected Class AWS_Common_Host
 		Shared Function ComputeBlockSizedKey(key as MemoryBlock, blockSize as integer) As MemoryBlock
 		  
 		  
-		  dim tmp_key as MemoryBlock = key
-		  dim tmp_out as MemoryBlock
+		  var tmp_key as MemoryBlock = key
+		  var tmp_out as MemoryBlock
 		  
 		  
 		  if tmp_key.size > BlockSize then 
@@ -56,22 +56,22 @@ Protected Class AWS_Common_Host
 		  '
 		  ' Header contains the AWS specific headers
 		  ' 
-		  dim tmp_canonical_request as string = self.GetCanonicalRequest(HTTPMethod, URI, QueryParams, Headers, payload_hash)
+		  var tmp_canonical_request as string = self.GetCanonicalRequest(HTTPMethod, URI, QueryParams, Headers, payload_hash)
 		  
-		  dim tmp_signature as string = self.GetSignature(RequestTime, tmp_canonical_request)
+		  var tmp_signature as string = self.GetSignature(RequestTime, tmp_canonical_request)
 		  
-		  dim tmp_signedheaders as string = self.GetListSignedHeaders(Headers)
+		  var tmp_signedheaders as string = self.GetListSignedHeaders(Headers)
 		  
-		  dim tmp_auth_str as string
+		  var tmp_auth_str as string
 		  
-		  dim tmp_credential_elements() as string
+		  var tmp_credential_elements() as string
 		  tmp_credential_elements.append(self.AWSAccessKeyId)
 		  tmp_credential_elements.append(self.TimeStampYYYYMMDD(RequestTime))
 		  tmp_credential_elements.append(self.AWSRegion)
 		  tmp_credential_elements.append(self.AWSService)
 		  tmp_credential_elements.append("aws4_request")
 		  
-		  dim tmp_credential as string = join(tmp_credential_elements,"/")
+		  var tmp_credential as string = join(tmp_credential_elements,"/")
 		  
 		  tmp_auth_str = self.HashingType
 		  tmp_auth_str = tmp_auth_str + " "
@@ -91,12 +91,12 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function GetCanonicalHeaders(Headers() as AWS_Request_Header) As String
-		  dim tmp_list() as string
-		  dim tmp_dct as new Dictionary
-		  dim tmp_elements() as string
+		  var tmp_list() as string
+		  var tmp_dct as new Dictionary
+		  var tmp_elements() as string
 		  
 		  for each header as AWS_Request_Header in Headers
-		    dim tmp_name as string =  header.Name.Lowercase()
+		    var tmp_name as string =  header.Name.Lowercase()
 		    tmp_list.Append(tmp_name)
 		    tmp_dct.Value(tmp_name) = header
 		  next
@@ -104,7 +104,7 @@ Protected Class AWS_Common_Host
 		  tmp_list.sort()
 		  
 		  for each name as string in tmp_list
-		    dim header as AWS_Request_Header = tmp_dct.Value(name)
+		    var header as AWS_Request_Header = tmp_dct.Value(name)
 		    tmp_elements.Append(name+":"+header.Value.trim())
 		    
 		  next
@@ -120,9 +120,9 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Function GetCanonicalQueryStr(theQueryParams as Dictionary) As string
 		  
-		  dim dct as Dictionary = theQueryParams
-		  dim tmp_list() as string
-		  dim tmp_elements() as string
+		  var dct as Dictionary = theQueryParams
+		  var tmp_list() as string
+		  var tmp_elements() as string
 		  
 		  for each k as string in dct.Keys
 		    tmp_list.Append(k)
@@ -132,7 +132,7 @@ Protected Class AWS_Common_Host
 		  tmp_list.sort
 		  
 		  for each k as String in tmp_list
-		    dim v as string = dct.Value(k)
+		    var v as string = dct.Value(k)
 		    if len(v)=0 then
 		      tmp_elements.Append(UriEncode(k) + "=")
 		    else
@@ -159,12 +159,12 @@ Protected Class AWS_Common_Host
 		  '<HashedPayload>
 		  
 		  
-		  dim CanonicalURI as string = UriEncode(URI, True)
-		  dim CanonicalQueryStr as string = self.GetCanonicalQueryStr(QueryParams)
-		  dim CanonicalHeaders as string = self.GetCanonicalHeaders(headers)
-		  dim SignedHeaders as String = self.GetListSignedHeaders(headers)
+		  var CanonicalURI as string = UriEncode(URI, True)
+		  var CanonicalQueryStr as string = self.GetCanonicalQueryStr(QueryParams)
+		  var CanonicalHeaders as string = self.GetCanonicalHeaders(headers)
+		  var SignedHeaders as String = self.GetListSignedHeaders(headers)
 		  
-		  dim tmp_elements() as string
+		  var tmp_elements() as string
 		  
 		  tmp_elements.Append(HTTPMethod)
 		  tmp_elements.Append(CanonicalURI)
@@ -183,11 +183,11 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function GetChildNodeFromXMLNode(theNode as XMLNode, theChildName as string) As XmlNode
-		  dim tmp_src_node as XmlNode = theNode
+		  var tmp_src_node as XmlNode = theNode
 		  
-		  dim ret_value as XmlNode
+		  var ret_value as XmlNode
 		  
-		  dim tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
+		  var tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
 		  
 		  while tmp_wrk_node <> nil
 		    if tmp_wrk_node.Name = theChildName then
@@ -204,9 +204,9 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Function GetHashedPayload(thePayload as String) As string
 		  
-		  dim payload as string = thePayload
+		  var payload as string = thePayload
 		  
-		  dim v as MemoryBlock = Crypto.SHA256(payload)
+		  var v as MemoryBlock = Crypto.SHA256(payload)
 		  
 		  return AWS_S3_host.MemoryBlockToHex(v).Lowercase()
 		End Function
@@ -227,11 +227,11 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function GetListSignedHeaders(Headers() as AWS_Request_Header) As String
-		  dim tmp_list() as string 
+		  var tmp_list() as string 
 		  
 		  for each header as AWS_Request_Header in Headers
 		    if header.AddToSignature then
-		      dim tmp_name as string =  header.Name.Lowercase()
+		      var tmp_name as string =  header.Name.Lowercase()
 		      tmp_list.Append(tmp_name)
 		    end if
 		    
@@ -251,9 +251,9 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Function GetQueryStr(theQueryParams as Dictionary) As string
 		  
-		  dim dct as Dictionary = theQueryParams
-		  dim tmp_list() as string
-		  dim tmp_elements() as string
+		  var dct as Dictionary = theQueryParams
+		  var tmp_list() as string
+		  var tmp_elements() as string
 		  
 		  for each k as string in dct.Keys
 		    tmp_list.Append(k)
@@ -263,7 +263,7 @@ Protected Class AWS_Common_Host
 		  tmp_list.sort
 		  
 		  for each k as String in tmp_list
-		    dim v as string = dct.Value(k)
+		    var v as string = dct.Value(k)
 		    if len(v)=0 then
 		      tmp_elements.Append(UriEncode(k))
 		    else
@@ -288,17 +288,17 @@ Protected Class AWS_Common_Host
 		  '20221027/us-east-1/s3/aws4_request
 		  'cf45edb2ce2dad557303828c17b1e9a1f112bbcfaca8c32e24751d2987dd7cf4
 		  
-		  dim tmp_hashType as string = self.HashingType
+		  var tmp_hashType as string = self.HashingType
 		  
-		  dim tmp_date as date = theDate
-		  dim tmp_CanonicalRequest as String = theCanonicalRequest
+		  var tmp_date as date = theDate
+		  var tmp_CanonicalRequest as String = theCanonicalRequest
 		  
-		  dim fmt_date as string = self.TimeStampISO8601Format(tmp_date)
-		  dim fmt_date_short as String = self.TimeStampYYYYMMDD(tmp_date)
-		  dim fmt_scope as string = fmt_date_short +"/" + self.AWSRegion + "/"+ self.AWSService + "/aws4_request"
-		  dim hashed_request as String = MemoryBlockToHex(Crypto.SHA256(tmp_CanonicalRequest)).Lowercase()
+		  var fmt_date as string = self.TimeStampISO8601Format(tmp_date)
+		  var fmt_date_short as String = self.TimeStampYYYYMMDD(tmp_date)
+		  var fmt_scope as string = fmt_date_short +"/" + self.AWSRegion + "/"+ self.AWSService + "/aws4_request"
+		  var hashed_request as String = MemoryBlockToHex(Crypto.SHA256(tmp_CanonicalRequest)).Lowercase()
 		  
-		  dim tmp_elements() as String
+		  var tmp_elements() as String
 		  
 		  tmp_elements.Append(tmp_hashType)
 		  tmp_elements.Append(fmt_date)
@@ -308,16 +308,16 @@ Protected Class AWS_Common_Host
 		  ' Save in property for debugging purposes
 		  self.StringToSignElements = tmp_elements
 		  
-		  dim StringToSign as string = join(tmp_elements, chr(10))
+		  var StringToSign as string = join(tmp_elements, chr(10))
 		  
 		  'signing key = HMAC-SHA256(HMAC-SHA256(HMAC-SHA256(HMAC-SHA256("AWS4" + "<YourSecretAccessKey>","20130524"),"us-east-1"),"s3"),"aws4_request")
 		  
-		  dim tmp0_secret as String = "AWS4"+self.AWSSecretAccessKey
-		  dim tmp1_date as MemoryBlock = HMAC_SHA256(tmp0_secret, fmt_date_short)
-		  dim tmp2_region as MemoryBlock = HMAC_SHA256(tmp1_date, self.AWSRegion)
-		  dim tmp3_service as MemoryBlock = HMAC_SHA256(tmp2_region, self.AWSService)
-		  dim tmp4_request as MemoryBlock = HMAC_SHA256(tmp3_service, "aws4_request")
-		  dim tmp5_signature as string = MemoryBlockToHex(HMAC_SHA256(tmp4_request, StringToSign)).Lowercase()
+		  var tmp0_secret as String = "AWS4"+self.AWSSecretAccessKey
+		  var tmp1_date as MemoryBlock = HMAC_SHA256(tmp0_secret, fmt_date_short)
+		  var tmp2_region as MemoryBlock = HMAC_SHA256(tmp1_date, self.AWSRegion)
+		  var tmp3_service as MemoryBlock = HMAC_SHA256(tmp2_region, self.AWSService)
+		  var tmp4_request as MemoryBlock = HMAC_SHA256(tmp3_service, "aws4_request")
+		  var tmp5_signature as string = MemoryBlockToHex(HMAC_SHA256(tmp4_request, StringToSign)).Lowercase()
 		  
 		  return tmp5_signature
 		  
@@ -326,10 +326,10 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function GetValueFromXMLNode(theNode as XMLNode, theItem as string) As String
-		  dim tmp_src_node as XmlNode = theNode
+		  var tmp_src_node as XmlNode = theNode
 		  
-		  dim ret_value as String
-		  dim tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
+		  var ret_value as String
+		  var tmp_wrk_node as XmlNode = tmp_src_node.FirstChild
 		  
 		  while tmp_wrk_node <> nil
 		    if tmp_wrk_node.Name = theItem then
@@ -358,23 +358,23 @@ Protected Class AWS_Common_Host
 		  const BlockSize=64
 		  const OutputSize = 32 ' was 20 for HMAC_SHA1
 		  
-		  dim i_key_mask as UInt64 = &h3636363636363636
-		  dim o_key_mask as UInt64 = &h5C5C5C5C5C5C5C5C
+		  var i_key_mask as UInt64 = &h3636363636363636
+		  var o_key_mask as UInt64 = &h5C5C5C5C5C5C5C5C
 		  
-		  dim tmp_key as MemoryBlock = theKey
-		  dim tmp_str as String = theSource
+		  var tmp_key as MemoryBlock = theKey
+		  var tmp_str as String = theSource
 		  
-		  dim len_str as integer = len(tmp_str)
+		  var len_str as integer = len(tmp_str)
 		  
-		  dim mb_input as new MemoryBlock(len_str+1)
-		  dim mb_output as MemoryBlock
+		  var mb_input as new MemoryBlock(len_str+1)
+		  var mb_output as MemoryBlock
 		  
 		  mb_input = tmp_str
 		  
-		  dim base_key as MemoryBlock = computeBlockSizedKey(tmp_key, BlockSize)
+		  var base_key as MemoryBlock = computeBlockSizedKey(tmp_key, BlockSize)
 		  
-		  dim i_key_pad as new MemoryBlock(BlockSize + len_str )
-		  dim o_key_pad as new MemoryBlock(BlockSize + OutputSize)
+		  var i_key_pad as new MemoryBlock(BlockSize + len_str )
+		  var o_key_pad as new MemoryBlock(BlockSize + OutputSize)
 		  
 		  
 		  for i as integer = 0 to BlockSize-1 step 8
@@ -387,7 +387,7 @@ Protected Class AWS_Common_Host
 		    
 		  next
 		  
-		  dim mb_temp as MemoryBlock = Crypto.SHA256(i_key_pad)
+		  var mb_temp as MemoryBlock = Crypto.SHA256(i_key_pad)
 		  
 		  for i as integer = BlockSize to BlockSize + OutputSize -1
 		    o_key_pad.UInt8Value(i) = mb_temp.UInt8Value(i-BlockSize)
@@ -416,15 +416,15 @@ Protected Class AWS_Common_Host
 		  
 		  
 		  
-		  dim search_str as string = credentials_group
+		  var search_str as string = credentials_group
 		  
-		  dim dct as new Dictionary
+		  var dct as new Dictionary
 		  
-		  dim txt_buffer as string = credentials.ReplaceAll(chr(13), chr(10))
-		  dim lines_buffer() as string = txt_buffer.Split(chr(10))
-		  dim parts() as string
+		  var txt_buffer as string = credentials.ReplaceAll(chr(13), chr(10))
+		  var lines_buffer() as string = txt_buffer.Split(chr(10))
+		  var parts() as string
 		  
-		  dim section_found as boolean = false
+		  var section_found as boolean = false
 		  
 		  for each line as string in lines_buffer
 		    line = line.Trim()
@@ -462,10 +462,10 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Shared Function MemoryBlockToHex(m as MemoryBlock) As String
-		  dim tmp as string
+		  var tmp as string
 		  
 		  for i as integer = 0 to m.Size-1
-		    dim tmp_int as integer = m.UInt8Value(i)
+		    var tmp_int as integer = m.UInt8Value(i)
 		    tmp = tmp + tmp_int.ToHex(2)
 		  next
 		  
@@ -483,10 +483,10 @@ Protected Class AWS_Common_Host
 		  ' Add AWS headers
 		  '
 		  
-		  dim payload_hash as string = self.GetHashedPayload(payload)
-		  dim formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
+		  var payload_hash as string = self.GetHashedPayload(payload)
+		  var formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
 		  
-		  Dim Headers() as AWS_Request_Header
+		  var Headers() as AWS_Request_Header
 		  for each item as AWS_Request_Header in UserHeaders
 		    Headers.Append(item.clone())
 		    
@@ -497,11 +497,11 @@ Protected Class AWS_Common_Host
 		  Headers.Append(new AWS_Request_Header("x-amz-content-sha256", payload_hash, True))
 		  Headers.Append(new AWS_Request_Header("x-amz-date",formatted_timestamp, True))
 		  
-		  dim tmp_method as string = HTTPMethod
-		  dim tmp_host as string = Host
-		  dim tmp_uri as string = URI
+		  var tmp_method as string = HTTPMethod
+		  var tmp_host as string = Host
+		  var tmp_uri as string = URI
 		  
-		  dim tmp_authorization as String = self.GetAuthorisationStr(tmp_method, tmp_host, tmp_uri, QueryParams, Headers, payload_hash, self.RequestDateTime)
+		  var tmp_authorization as String = self.GetAuthorisationStr(tmp_method, tmp_host, tmp_uri, QueryParams, Headers, payload_hash, self.RequestDateTime)
 		  
 		  var ct as new URLConnection
 		  
@@ -522,10 +522,10 @@ Protected Class AWS_Common_Host
 		    
 		  end if
 		  
-		  dim url as string = "https://" +  host + uri ' "s3.eu-west-3.amazonaws.com"
+		  var url as string = "https://" +  host + uri ' "s3.eu-west-3.amazonaws.com"
 		  
-		  dim timeout as integer = 30
-		  dim reply as new AWS_Reply
+		  var timeout as integer = 30
+		  var reply as new AWS_Reply
 		  
 		  reply.ReplyText = ct.SendSync(HTTPMethod, url, timeout)
 		  
@@ -536,13 +536,12 @@ Protected Class AWS_Common_Host
 		  
 		  return reply
 		  
-		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function TimeStampISO8601Format(param as date) As string
-		  dim d as  date = param
+		  var d as  date = param
 		  
 		  d.GMTOffset =0
 		  
@@ -564,7 +563,7 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function TimeStampRFC7231(param as date) As String
-		  dim d as  date = param
+		  var d as  date = param
 		  
 		  '
 		  ' See RFC7231
@@ -572,11 +571,11 @@ Protected Class AWS_Common_Host
 		  ' see https://developer.mozilla.org/fr/docs/Web/HTTP/Headers/Date
 		  ' Date: <day-name>, <jour> <mois> <année> <heure>:<minute>:<seconde> GMT
 		  
-		  dim ret() as String
+		  var ret() as String
 		  
-		  dim tmp_src as string 
-		  dim tmp_dow() as String 
-		  dim tmp_month() as string
+		  var tmp_src as string 
+		  var tmp_dow() as String 
+		  var tmp_month() as string
 		  
 		  
 		  tmp_src = ",Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun"
@@ -602,7 +601,7 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function TimeStampYYYYMMDD(param as date) As string
-		  dim d as  date = param
+		  var d as  date = param
 		  
 		  d.GMTOffset =0
 		  
@@ -618,10 +617,10 @@ Protected Class AWS_Common_Host
 		  '
 		  ' Uri encode function, as per AWS specifications
 		  '
-		  dim tmpin as string = param
-		  dim tmpout as string
+		  var tmpin as string = param
+		  var tmpout as string
 		  
-		  dim no_encode as string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
+		  var no_encode as string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
 		  
 		  if protectSlash then
 		    no_encode = no_encode + "/"
@@ -630,7 +629,7 @@ Protected Class AWS_Common_Host
 		  
 		  
 		  for i as integer = 1 to tmpin.lenb
-		    dim c as string = tmpin.midb(i,1)
+		    var c as string = tmpin.midb(i,1)
 		    if no_encode.InStr(c) > 0 then
 		      tmpout = tmpout + c
 		      

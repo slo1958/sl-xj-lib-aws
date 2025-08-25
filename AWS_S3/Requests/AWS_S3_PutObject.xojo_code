@@ -36,7 +36,7 @@ Inherits AWS_Common_Request
 		  //  Object received from the server or an empty string
 		  //
 		  
-		  dim tmp_host_prefix as string = self.BucketName + "." 
+		  var tmp_host_prefix as string = self.BucketName + "." 
 		  
 		  self.URI = self.ObjectKey
 		  

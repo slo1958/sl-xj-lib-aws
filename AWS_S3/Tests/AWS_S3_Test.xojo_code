@@ -5,7 +5,7 @@ Inherits AWS_S3_Host
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.
 		  
-		  dim dct as new Dictionary
+		  var dct as new Dictionary
 		  
 		  dct.value("aws_access_key_id") = "AKIAIOSFODNN7EXAMPLE"
 		  dct.value("aws_secret_access_key") = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
@@ -29,13 +29,13 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function DecodeError_test_01() As string
-		  dim res_calculated as String
+		  var res_calculated as String
 		  
-		  dim input_str as string = "<?xml version=""1.0"" encoding=""UTF-8""?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>sl58-aws-bucket-001kk</BucketName><RequestId>2DPRQCN9JMZG10G7</RequestId><HostId>42ZoaPcOc+06Vc7WP4bAzj7JPtj9Pnb9lJGZbM2b/nIPeI8IWTLCp1vjRnBbqJb66E/WjqKcHnRpZi7SwT9K+g==</HostId></Error>"
-		  dim res_expected as string = "NoSuchBucket::The specified bucket does not exist"
+		  var input_str as string = "<?xml version=""1.0"" encoding=""UTF-8""?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>sl58-aws-bucket-001kk</BucketName><RequestId>2DPRQCN9JMZG10G7</RequestId><HostId>42ZoaPcOc+06Vc7WP4bAzj7JPtj9Pnb9lJGZbM2b/nIPeI8IWTLCp1vjRnBbqJb66E/WjqKcHnRpZi7SwT9K+g==</HostId></Error>"
+		  var res_expected as string = "NoSuchBucket::The specified bucket does not exist"
 		  
 		  
-		  dim tmp as new AWS_Error_info(new XmlDocument(input_str))
+		  var tmp as new AWS_Error_info(new XmlDocument(input_str))
 		  res_calculated = tmp.Code+"::"+tmp.message
 		  
 		  
@@ -46,13 +46,13 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function DecodeTimeStemp_test_01() As string
-		  dim res_calculated as String
-		  dim res_expected as string = "2022-11-07 11:03:43"
+		  var res_calculated as String
+		  var res_expected as string = "2022-11-07 11:03:43"
 		  
-		  dim input_str as string = "Mon, 07 Nov 2022 11:03:43 GMT"
+		  var input_str as string = "Mon, 07 Nov 2022 11:03:43 GMT"
 		  
 		  
-		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  var tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
 		  
 		  if tmp_date = nil then
 		    res_calculated = "NIL"
@@ -67,12 +67,12 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function DecodeTimeStemp_test_02() As string
-		  dim res_calculated as String
-		  dim res_expected as string = "NIL"
+		  var res_calculated as String
+		  var res_expected as string = "NIL"
 		  
-		  dim input_str as string = "Mon, 07 YAPI 2022 11:03:43 GMT"
+		  var input_str as string = "Mon, 07 YAPI 2022 11:03:43 GMT"
 		  
-		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  var tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
 		  
 		  if tmp_date = nil then
 		    res_calculated = "NIL"
@@ -87,12 +87,12 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function DecodeTimeStemp_test_03() As string
-		  dim res_calculated as String
-		  dim res_expected as string = "NIL"
+		  var res_calculated as String
+		  var res_expected as string = "NIL"
 		  
-		  dim input_str as string = "Mon, 07 Nov 2022 11:03:43 UTC+2"
+		  var input_str as string = "Mon, 07 Nov 2022 11:03:43 UTC+2"
 		  
-		  dim tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
+		  var tmp_date as date = AWS_Common_Request.DecodeTimeStamp(input_str)
 		  
 		  if tmp_date = nil then
 		    res_calculated = "NIL"
@@ -107,11 +107,11 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function ExtractBucketListFromXML_test_01() As string
-		  dim tmp_input_xml as string =" <?xml version=""1.0"" encoding=""UTF-8""?> <ListAllMyBucketsResult xmlns=""http://s3.amazonaws.com/doc/2006-03-01/""><Owner><ID>862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><Buckets><Bucket><Name>alphabeta</Name><CreationDate>2022-03-14T12:07:48.000Z</CreationDate></Bucket></Buckets></ListAllMyBucketsResult>"
+		  var tmp_input_xml as string =" <?xml version=""1.0"" encoding=""UTF-8""?> <ListAllMyBucketsResult xmlns=""http://s3.amazonaws.com/doc/2006-03-01/""><Owner><ID>862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><Buckets><Bucket><Name>alphabeta</Name><CreationDate>2022-03-14T12:07:48.000Z</CreationDate></Bucket></Buckets></ListAllMyBucketsResult>"
 		  
-		  dim res_expected as string = "alphabeta"
+		  var res_expected as string = "alphabeta"
 		  
-		  dim  res_calculated as String = join_names(AWS_S3_ListBuckets.ExtractBucketListFromXML(new XMLDocument(tmp_input_xml)))
+		  var  res_calculated as String = join_names(AWS_S3_ListBuckets.ExtractBucketListFromXML(new XMLDocument(tmp_input_xml)))
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -120,11 +120,11 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function ExtractObjectInfoFromXML_test_01() As string
-		  dim tmp_input_xml as string = "<?xml version=""1.0"" encoding=""UTF-8""?><ListBucketResult xmlns=""http://s3.amazonaws.com/doc/2006-03-01/""><Name>alphabeta</Name><Prefix></Prefix><Marker></Marker><MaxKeys>1000</MaxKeys><IsTruncated>false</IsTruncated><Contents><Key>PI-Silenzio-Retro-ZR-(fr).pdf</Key><LastModified>2022-10-26T18:08:55.000Z</LastModified><ETag>&quot;15d1bc42e59983804acd02df7fde75cb&quot;</ETag><Size>2516278</Size><Owner><ID>A862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>myfiles/</Key><LastModified>2022-10-26T18:11:00.000Z</LastModified><ETag>&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</ETag><Size>0</Size><Owner><ID>B862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><StorageClass>STANDARD</StorageClass></Contents></ListBucketResult>"
+		  var tmp_input_xml as string = "<?xml version=""1.0"" encoding=""UTF-8""?><ListBucketResult xmlns=""http://s3.amazonaws.com/doc/2006-03-01/""><Name>alphabeta</Name><Prefix></Prefix><Marker></Marker><MaxKeys>1000</MaxKeys><IsTruncated>false</IsTruncated><Contents><Key>PI-Silenzio-Retro-ZR-(fr).pdf</Key><LastModified>2022-10-26T18:08:55.000Z</LastModified><ETag>&quot;15d1bc42e59983804acd02df7fde75cb&quot;</ETag><Size>2516278</Size><Owner><ID>A862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>myfiles/</Key><LastModified>2022-10-26T18:11:00.000Z</LastModified><ETag>&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</ETag><Size>0</Size><Owner><ID>B862ff4f13cc748df3224d0e79f06167c0cb86801def02fc14ce123e1d42cf3d1</ID></Owner><StorageClass>STANDARD</StorageClass></Contents></ListBucketResult>"
 		  
-		  dim res_expected as string = "myfiles/;PI-Silenzio-Retro-ZR-(fr).pdf"
+		  var res_expected as string = "myfiles/;PI-Silenzio-Retro-ZR-(fr).pdf"
 		  
-		  dim  res_calculated as String = join_names( AWS_S3_ListObjectsInBucket.ExtractObjectInfoFromXML(new XMLDocument(tmp_input_xml)))
+		  var  res_calculated as String = join_names( AWS_S3_ListObjectsInBucket.ExtractObjectInfoFromXML(new XMLDocument(tmp_input_xml)))
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -133,21 +133,21 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function GetAuthorisationStr_test_01() As String
-		  dim res_expected as string = "AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request,SignedHeaders=host;range;x-amz-content-sha256;x-amz-date,Signature=f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41"
+		  var res_expected as string = "AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request,SignedHeaders=host;range;x-amz-content-sha256;x-amz-date,Signature=f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41"
 		  
-		  dim tmp_method as string = "GET"
-		  dim tmp_host as string = "examplebucket.s3.amazonaws.com"
-		  dim tmp_uri as string = "/test.txt"
+		  var tmp_method as string = "GET"
+		  var tmp_host as string = "examplebucket.s3.amazonaws.com"
+		  var tmp_uri as string = "/test.txt"
 		  
-		  dim tmp_payload as string = ""
+		  var tmp_payload as string = ""
 		  
-		  dim QueryParams as new Dictionary
+		  var QueryParams as new Dictionary
 		  
-		  dim Headers() as AWS_Request_Header
+		  var Headers() as AWS_Request_Header
 		  Headers.Append(new AWS_Request_Header("range","bytes=0-9", True))
 		  
-		  dim payload_hash as string = self.GetHashedPayload(tmp_payload)
-		  dim formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
+		  var payload_hash as string = self.GetHashedPayload(tmp_payload)
+		  var formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
 		  
 		  
 		  Headers.Append(new AWS_Request_Header("host" ,tmp_host, True))
@@ -155,7 +155,7 @@ Inherits AWS_S3_Host
 		  Headers.Append(new AWS_Request_Header("x-amz-date",formatted_timestamp, True))
 		  
 		  
-		  dim res_calculated as String = self.GetAuthorisationStr(tmp_method, tmp_host, tmp_uri, QueryParams, Headers, payload_hash, self.RequestDateTime)
+		  var res_calculated as String = self.GetAuthorisationStr(tmp_method, tmp_host, tmp_uri, QueryParams, Headers, payload_hash, self.RequestDateTime)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -168,14 +168,14 @@ Inherits AWS_S3_Host
 		Function GetCanonicalQueryStr_test_01() As string
 		  'prefix=somePrefix&marker=someMarker&max-keys=20
 		  
-		  dim d as new Dictionary
+		  var d as new Dictionary
 		  
 		  d.Value("prefix") = "somePrefix"
 		  d.value("marker") = "someMarker"
 		  d.Value("max-keys")="20"
 		  
-		  dim res_expected as string = "marker=someMarker&max-keys=20&prefix=somePrefix"
-		  dim res_calculated as string = GetCanonicalQueryStr(d)
+		  var res_expected as string = "marker=someMarker&max-keys=20&prefix=somePrefix"
+		  var res_calculated as string = GetCanonicalQueryStr(d)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -187,14 +187,14 @@ Inherits AWS_S3_Host
 		Function GetCanonicalQueryStr_test_02() As string
 		  'prefix=somePrefix&marker=someMarker&max-keys=20
 		  
-		  dim d as new Dictionary
+		  var d as new Dictionary
 		  
 		  d.value("marker") = "someMarker"
 		  d.Value("lifecycle") = ""
 		  d.Value("max-keys")="20"
 		  
-		  dim res_expected as string = "lifecycle=&marker=someMarker&max-keys=20"
-		  dim res_calculated as string = GetCanonicalQueryStr(d)
+		  var res_expected as string = "lifecycle=&marker=someMarker&max-keys=20"
+		  var res_calculated as string = GetCanonicalQueryStr(d)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -205,14 +205,14 @@ Inherits AWS_S3_Host
 		Function GetQueryStr_test_01() As String
 		  'prefix=somePrefix&marker=someMarker&max-keys=20
 		  
-		  dim d as new Dictionary
+		  var d as new Dictionary
 		  
 		  d.Value("prefix") = "somePrefix"
 		  d.value("marker") = "someMarker"
 		  d.Value("max-keys")="20"
 		  
-		  dim res_expected as string = "marker=someMarker&max-keys=20&prefix=somePrefix"
-		  dim res_calculated as string = GetQueryStr(d)
+		  var res_expected as string = "marker=someMarker&max-keys=20&prefix=somePrefix"
+		  var res_calculated as string = GetQueryStr(d)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -223,14 +223,14 @@ Inherits AWS_S3_Host
 		Function GetQueryStr_test_02() As string
 		  'prefix=somePrefix&marker=someMarker&max-keys=20
 		  
-		  dim d as new Dictionary
+		  var d as new Dictionary
 		  
 		  d.value("marker") = "someMarker"
 		  d.Value("lifecycle") = ""
 		  d.Value("max-keys")="20"
 		  
-		  dim res_expected as string = "lifecycle&marker=someMarker&max-keys=20"
-		  dim res_calculated as string = GetQueryStr(d)
+		  var res_expected as string = "lifecycle&marker=someMarker&max-keys=20"
+		  var res_calculated as string = GetQueryStr(d)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -240,22 +240,22 @@ Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Function GetSignature_test_01() As string
 		  ' basic version
-		  dim res_expected as string = "f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41"
+		  var res_expected as string = "f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41"
 		  
-		  dim payload_hash as string = self.GetHashedPayload("")
+		  var payload_hash as string = self.GetHashedPayload("")
 		  
-		  dim wURI as string = "/test.txt"
+		  var wURI as string = "/test.txt"
 		  
-		  dim h() as AWS_Request_Header
+		  var h() as AWS_Request_Header
 		  
 		  h.Append(new AWS_Request_Header("host" ,"examplebucket.s3.amazonaws.com", True))
 		  h.Append(new AWS_Request_Header("x-amz-content-sha256", payload_hash, True)) '"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", True))
 		  h.Append(new AWS_Request_Header("x-amz-date","20130524T000000Z", True))
 		  h.Append(new AWS_Request_Header("range", "bytes=0-9", True))
 		  
-		  dim c as string =  self.GetCanonicalRequest("GET",wURI, new Dictionary, h,payload_hash)
+		  var c as string =  self.GetCanonicalRequest("GET",wURI, new Dictionary, h,payload_hash)
 		  
-		  dim res_calculated as String = GetSignature(self.RequestDateTime,c)
+		  var res_calculated as String = GetSignature(self.RequestDateTime,c)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -266,11 +266,11 @@ Inherits AWS_S3_Host
 		Function GetSignature_test_02() As string
 		  ' test hash payload
 		  '
-		  dim res_expected as string = "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd"
-		  dim payload_hash as string = self.GetHashedPayload("Welcome to Amazon S3.")
-		  dim wURI as string = "/test$file.text"
+		  var res_expected as string = "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd"
+		  var payload_hash as string = self.GetHashedPayload("Welcome to Amazon S3.")
+		  var wURI as string = "/test$file.text"
 		  
-		  dim h() as AWS_Request_Header
+		  var h() as AWS_Request_Header
 		  
 		  h.Append(new AWS_Request_Header("date","Fri, 24 May 2013 00:00:00 GMT",True))
 		  h.Append(new AWS_Request_Header("host" ,"examplebucket.s3.amazonaws.com", True))
@@ -278,9 +278,9 @@ Inherits AWS_S3_Host
 		  h.Append(new AWS_Request_Header("x-amz-date","20130524T000000Z", True))
 		  h.Append(new AWS_Request_Header("x-amz-storage-class","REDUCED_REDUNDANCY", True))
 		  
-		  dim c as string =  self.GetCanonicalRequest("PUT",wURI, new Dictionary, h,payload_hash)
+		  var c as string =  self.GetCanonicalRequest("PUT",wURI, new Dictionary, h,payload_hash)
 		  
-		  dim res_calculated as String = GetSignature(self.RequestDateTime,c)
+		  var res_calculated as String = GetSignature(self.RequestDateTime,c)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -290,13 +290,13 @@ Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Function GetSignature_test_03() As string
 		  ' add query parameter without value
-		  dim res_expected as string = "fea454ca298b7da1c68078a5d1bdbfbbe0d65c699e0f91ac7a200a0136783543"
+		  var res_expected as string = "fea454ca298b7da1c68078a5d1bdbfbbe0d65c699e0f91ac7a200a0136783543"
 		  
-		  dim payload_hash as string = self.GetHashedPayload("")
+		  var payload_hash as string = self.GetHashedPayload("")
 		  
-		  dim wURI as string = "/"
+		  var wURI as string = "/"
 		  
-		  dim h() as AWS_Request_Header
+		  var h() as AWS_Request_Header
 		  
 		  
 		  h.Append(new AWS_Request_Header("host" ,"examplebucket.s3.amazonaws.com", True))
@@ -304,12 +304,12 @@ Inherits AWS_S3_Host
 		  h.Append(new AWS_Request_Header("x-amz-date","20130524T000000Z", True))
 		  
 		  
-		  dim queryparams as new Dictionary
+		  var queryparams as new Dictionary
 		  queryparams.value("lifecycle")=""
 		  
-		  dim c as string =  self.GetCanonicalRequest("GET",wURI, queryparams, h,payload_hash)
+		  var c as string =  self.GetCanonicalRequest("GET",wURI, queryparams, h,payload_hash)
 		  
-		  dim res_calculated as String = GetSignature(self.RequestDateTime,c)
+		  var res_calculated as String = GetSignature(self.RequestDateTime,c)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -319,11 +319,11 @@ Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Function GetSignature_test_04() As string
 		  ' add payload
-		  dim res_expected as string = "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd"
-		  dim payload_hash as string = self.GetHashedPayload("Welcome to Amazon S3.")
-		  dim wURI as string = "/test$file.text"
+		  var res_expected as string = "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd"
+		  var payload_hash as string = self.GetHashedPayload("Welcome to Amazon S3.")
+		  var wURI as string = "/test$file.text"
 		  
-		  dim h() as AWS_Request_Header
+		  var h() as AWS_Request_Header
 		  
 		  h.Append(new AWS_Request_Header("date","Fri, 24 May 2013 00:00:00 GMT",True))
 		  h.Append(new AWS_Request_Header("host" ,"examplebucket.s3.amazonaws.com", True))
@@ -331,9 +331,9 @@ Inherits AWS_S3_Host
 		  h.Append(new AWS_Request_Header("x-amz-date","20130524T000000Z", True))
 		  h.Append(new AWS_Request_Header("x-amz-storage-class","REDUCED_REDUNDANCY", True))
 		  
-		  dim c as string =  self.GetCanonicalRequest("PUT",wURI, new Dictionary, h,payload_hash)
+		  var c as string =  self.GetCanonicalRequest("PUT",wURI, new Dictionary, h,payload_hash)
 		  
-		  dim res_calculated as String = GetSignature(self.RequestDateTime,c)
+		  var res_calculated as String = GetSignature(self.RequestDateTime,c)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -344,11 +344,11 @@ Inherits AWS_S3_Host
 		Function GetSignature_test_05() As string
 		  ' Test TimeStampRFC7231 
 		  
-		  dim res_expected as string = "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd"
-		  dim payload_hash as string = self.GetHashedPayload("Welcome to Amazon S3.")
-		  dim wURI as string = "/test$file.text"
+		  var res_expected as string = "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd"
+		  var payload_hash as string = self.GetHashedPayload("Welcome to Amazon S3.")
+		  var wURI as string = "/test$file.text"
 		  
-		  dim h() as AWS_Request_Header
+		  var h() as AWS_Request_Header
 		  
 		  h.Append(new AWS_Request_Header("date",self.TimeStampRFC7231(self.RequestDateTime),True))
 		  h.Append(new AWS_Request_Header("host" ,"examplebucket.s3.amazonaws.com", True))
@@ -356,9 +356,9 @@ Inherits AWS_S3_Host
 		  h.Append(new AWS_Request_Header("x-amz-date","20130524T000000Z", True))
 		  h.Append(new AWS_Request_Header("x-amz-storage-class","REDUCED_REDUNDANCY", True))
 		  
-		  dim c as string =  self.GetCanonicalRequest("PUT",wURI, new Dictionary, h,payload_hash)
+		  var c as string =  self.GetCanonicalRequest("PUT",wURI, new Dictionary, h,payload_hash)
 		  
-		  dim res_calculated as String = GetSignature(self.RequestDateTime,c)
+		  var res_calculated as String = GetSignature(self.RequestDateTime,c)
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
 		  
@@ -368,7 +368,7 @@ Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Function join_names(items() as AWS_S3_item) As string
 		  
-		  dim tmp() as string
+		  var tmp() as string
 		  
 		  for each item as AWS_S3_item in items
 		    tmp.Append(item.Name)
@@ -383,12 +383,12 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function SHA256_test_01() As string
-		  dim res_expected as string = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+		  var res_expected as string = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 		  
 		  
-		  dim v as MemoryBlock = Crypto.SHA256("")
+		  var v as MemoryBlock = Crypto.SHA256("")
 		  
-		  dim res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
+		  var res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
@@ -398,9 +398,9 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Function SHA256_test_02() As string
-		  dim res_expected as string = "7344ae5b7ee6c3e7e6b0fe0640412a37625d1fbfff95c48bbb2dc43964946972"
+		  var res_expected as string = "7344ae5b7ee6c3e7e6b0fe0640412a37625d1fbfff95c48bbb2dc43964946972"
 		  
-		  dim tmp_elements() as string
+		  var tmp_elements() as string
 		  
 		  tmp_elements.append("GET")
 		  tmp_elements.append("/test.txt")
@@ -413,9 +413,9 @@ Inherits AWS_S3_Host
 		  tmp_elements.append("host;range;x-amz-content-sha256;x-amz-date")
 		  tmp_elements.append("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
 		  
-		  dim v as MemoryBlock = Crypto.SHA256(join(tmp_elements, chr(10)))
+		  var v as MemoryBlock = Crypto.SHA256(join(tmp_elements, chr(10)))
 		  
-		  dim res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
+		  var res_calculated as string = AWS_S3_Host.MemoryBlockToHex(v).Lowercase()
 		  
 		  
 		  return CurrentMethodName + chr(9) + res_calculated + chr(9) + res_expected + chr(9) + str(res_calculated = res_expected)
@@ -425,7 +425,7 @@ Inherits AWS_S3_Host
 
 	#tag Method, Flags = &h0
 		Sub test_all()
-		  dim test_results() as string
+		  var test_results() as string
 		  
 		  
 		  test_results.Append(self.GetCanonicalQueryStr_test_01())
@@ -455,8 +455,8 @@ Inherits AWS_S3_Host
 		  
 		  test_results.Append(self.DecodeError_test_01)
 		  
-		  dim nb_tests as integer
-		  dim nb_ok as integer
+		  var nb_tests as integer
+		  var nb_ok as integer
 		  
 		  for each one_result as string in test_results
 		    nb_tests = nb_tests + 1
@@ -464,7 +464,7 @@ Inherits AWS_S3_Host
 		    //
 		    //each test method returns the name of the method, the actual results, the expected results and the status / tab separated string
 		    //
-		    dim item() as string  = one_result.split(chr(9))
+		    var item() as string  = one_result.split(chr(9))
 		    if item(3) = "True" then
 		      nb_ok = nb_ok + 1
 		      

@@ -427,7 +427,7 @@ End
 	#tag Event
 		Sub Open()
 		  
-		  dim s3 as new AWS_S3_Test
+		  var s3 as new AWS_S3_Test
 		  
 		  //s3.test_all
 		  
@@ -441,7 +441,7 @@ End
 		  // load sample data
 		  //
 		  
-		  dim txt_buffer as string = myfile3_10K_tab
+		  var txt_buffer as string = myfile3_10K_tab
 		  
 		  return txt_buffer.ReplaceAll(chr(13),"")
 		  
@@ -461,11 +461,11 @@ End
 		Sub Action()
 		  
 		  
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request  as new AWS_S3_ListBuckets()
+		  var s3_request  as new AWS_S3_ListBuckets()
 		  
-		  dim list_of_buckets() as AWS_S3_item = s3_request.SendRequest(s3_host)
+		  var list_of_buckets() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = s3_request.ReplyText
 		  
@@ -503,11 +503,11 @@ End
 		  //
 		  // Request objects in a bucket
 		  //
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_ListObjectsInBucket(DefaultBucket)
+		  var s3_request as new AWS_S3_ListObjectsInBucket(DefaultBucket)
 		  
-		  dim lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
+		  var lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
 		  
 		  if s3_request.ErrorInfo = nil then
@@ -548,11 +548,11 @@ End
 		  //
 		  // Request an existing object in an existing  bucket
 		  //
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_GetObject(DefaultBucket,"I2C/i2c.h")
+		  var s3_request as new AWS_S3_GetObject(DefaultBucket,"I2C/i2c.h")
 		  
-		  dim tmp as string = s3_request.SendRequest(s3_host)
+		  var tmp as string = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = tmp
 		  
@@ -577,11 +577,11 @@ End
 		  //
 		  // Request objects in a non existant bucket
 		  //
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001xx")
+		  var s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001xx")
 		  
-		  dim lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
+		  var lst() as AWS_S3_item = s3_request.SendRequest(s3_host)
 		  
 		  
 		  if s3_request.ErrorInfo = nil then
@@ -621,11 +621,11 @@ End
 		  //
 		  // Request a non existing object in an existing  bucket
 		  //
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.hxyz")
+		  var s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.hxyz")
 		  
-		  dim tmp as string = s3_request.SendRequest(s3_host)
+		  var tmp as string = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = tmp
 		  
@@ -650,11 +650,11 @@ End
 		  //
 		  // Request an object in a non existing  bucket
 		  //
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001xyz","I2C/i2c.h")
+		  var s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001xyz","I2C/i2c.h")
 		  
-		  dim tmp as string = s3_request.SendRequest(s3_host)
+		  var tmp as string = s3_request.SendRequest(s3_host)
 		  
 		  TextArea1.text = tmp
 		  
@@ -684,11 +684,11 @@ End
 		  var ObjText as string = get_object_text
 		  var ObjName as string = "MyObject_2025-08-24" //+DateTime.Now.SQLDateTime.ReplaceAll(":","-").replaceall(" ","-")
 		  
-		  dim s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
 		  
-		  dim s3_request as new AWS_S3_PutObject(DefaultBucket, AWS_S3_PutObject.EncodeName(ObjName), ObjText)
+		  var s3_request as new AWS_S3_PutObject(DefaultBucket, AWS_S3_PutObject.EncodeName(ObjName), ObjText)
 		  
-		  dim ret_status as string  = s3_request.SendRequest(s3_host)
+		  var ret_status as string  = s3_request.SendRequest(s3_host)
 		  
 		  
 		  if s3_request.ErrorInfo = nil then
