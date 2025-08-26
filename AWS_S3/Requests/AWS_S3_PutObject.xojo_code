@@ -2,24 +2,46 @@
 Protected Class AWS_S3_PutObject
 Inherits AWS_Common_Request
 	#tag Method, Flags = &h0
-		Sub Constructor(theBucket as string, theObjectKey as string, theObjectBody as string)
+		Sub Constructor(theBucket as string, theObject as AWS_S3_Item)
 		  //
 		  // Requests to put an object in a bucket
 		  //
 		  // Paramters:
 		  // - name of the bucket
-		  // - name of the object
-		  // - body of the object
+		  // - object to save as  AWS_S3_Item 
+		  //
+		  // About AWS_S3_Item
+		  //     name and content must be defined 
+		  //.    the name is the full path with or without a leading "/"
+		  //
+		  // URLEncoding of the object name is done by the parent method
 		  //
 		  
-		  
 		  Super.Constructor
-		  BucketName = theBucket
-		  ObjectKey = theObjectKey
-		  ObjectBody = theObjectBody
+		  BucketName = theBucket 
+		  AWS_Object = theObject
+		  
+		  return
+		  
 		  
 		  
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ObjectBody() As string
+		  
+		  return self.AWS_Object.Content
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ObjectKey() As string
+		  
+		  return self.AWS_Object.Name
+		  
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -36,6 +58,9 @@ Inherits AWS_Common_Request
 		  //  Object received from the server or an empty string
 		  //
 		  
+		  
+		  if self.AWS_Object = nil then return "ERR-Missing object"
+		  
 		  var tmp_host_prefix as string = self.BucketName + "." 
 		  
 		  self.URI = self.ObjectKey
@@ -51,30 +76,24 @@ Inherits AWS_Common_Request
 		  self.UserRequestHeaders.Add( new AWS_Request_Header("Content-length",str(self.ObjectBody.LenB), False))
 		  super.SendRequest(server,tmp_host_prefix)
 		  
-		  return DefineEncoding(self.ReplyText, Encodings.UTF8)
-		  // 
-		  // if self.ReplyXMLDoc = nil and len(self.ReplyText)>0 then
-		  // return DefineEncoding(self.ReplyText, Encodings.UTF8)
-		  // 
-		  // else
-		  // return ""
-		  // 
-		  // end if
+		  if self.ReplyText.bytes > 0 then
+		    return DefineEncoding(self.ReplyText, Encodings.UTF8)
+		    
+		  else
+		    return "Ok"
+		    
+		  end if
 		  
 		End Function
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
+		AWS_Object As AWS_S3_item
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		BucketName As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ObjectBody As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ObjectKey As String
 	#tag EndProperty
 
 
@@ -128,14 +147,6 @@ Inherits AWS_Common_Request
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ObjectKey"
-			Visible=false
-			Group="Behavior"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="ReplyText"
 			Visible=false
 			Group="Behavior"
@@ -169,14 +180,6 @@ Inherits AWS_Common_Request
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="URI"
-			Visible=false
-			Group="Behavior"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ObjectBody"
 			Visible=false
 			Group="Behavior"
 			InitialValue=""

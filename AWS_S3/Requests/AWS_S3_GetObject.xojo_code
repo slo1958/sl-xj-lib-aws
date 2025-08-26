@@ -8,7 +8,9 @@ Inherits AWS_Common_Request
 		  //
 		  // Paramters:
 		  // - name of the bucket
-		  // - name of the object
+		  // - name of the object 
+		  //
+		  // URLEncoding of the object name is done by the parent method
 		  //
 		  
 		  
@@ -19,7 +21,7 @@ Inherits AWS_Common_Request
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SendRequest(server as AWS_Common_Host) As String
+		Function SendRequest(server as AWS_Common_Host) As AWS_S3_item
 		  //
 		  // sends the request to get the object specified when calling the constructor
 		  // returns the object as a string
@@ -43,13 +45,18 @@ Inherits AWS_Common_Request
 		  
 		  super.SendRequest(server,tmp_host_prefix)
 		  
+		  var ret as new AWS_S3_item
+		  
 		  if self.ReplyXMLDoc = nil and len(self.ReplyText)>0 then
-		    return DefineEncoding(self.ReplyText, Encodings.UTF8)
-		    
-		  else
-		    return ""
-		    
+		    ret.Content = DefineEncoding(self.ReplyText, Encodings.UTF8)
+		    ret.Name = self.ObjectKey
+		    if self.ReplyHeaders <> nil and self.ReplyHeaders.HasKey("Content-Length") then
+		      ret.Size = self.ReplyHeaders.Lookup("Content-Length","0").IntegerValue
+		      
+		    end if
 		  end if
+		  
+		  return ret
 		  
 		End Function
 	#tag EndMethod

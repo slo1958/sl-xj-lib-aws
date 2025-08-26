@@ -1,8 +1,28 @@
 #tag Class
 Protected Class AWS_S3_item
 	#tag Method, Flags = &h0
-		Sub Constructor(theName as string = "")
-		  self.Name = theName
+		Sub Constructor()
+		  
+		  self.Name = "Noname"
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Constructor(objname as string, objcontent as string)
+		  
+		  if objname.trim.length = 0 then
+		    self.name ="Noname"
+		    
+		  else
+		    self.Name = objname.trim
+		    
+		  end if
+		  
+		  self.Content = objcontent
+		  
+		  return
+		  
 		  
 		End Sub
 	#tag EndMethod
@@ -19,11 +39,11 @@ Protected Class AWS_S3_item
 		  
 		  var date_and_time() as string = dateStr.Split("T")
 		  
-		  if date_and_time.LastIndex < 1 then return nil
+		  if date_and_time.LastRowIndex < 1 then return nil
 		  
 		  var time_and_zone() as string = date_and_time(1).Split(".")
 		  
-		  if time_and_zone.LastIndex < 0 then return nil
+		  if time_and_zone.LastRowIndex < 0 then return nil
 		  
 		  var sqldatetime as string = date_and_time(0) + " " + time_and_zone(0)
 		  
@@ -40,6 +60,10 @@ Protected Class AWS_S3_item
 		End Function
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h0
+		Content As string
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		CreationDateStr As string

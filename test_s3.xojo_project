@@ -1,9 +1,9 @@
 Type=Desktop
 RBProjectVersion=2025.011
-MinIDEVersion=20070100
+MinIDEVersion=20210300
 OrigIDEVersion=00000000
 Class=App;App.xojo_code;&h000000006EF44FFF;&h0000000000000000;false
-Window=Window1;Window1.xojo_window;&h0000000069876FFF;&h0000000000000000;false
+DesktopWindow=Window1;Window1.xojo_window;&h0000000069876FFF;&h0000000000000000;false
 MenuBar=MainMenuBar;MainMenuBar.xojo_menu;&h000000006877CFFF;&h0000000000000000;false
 BuildSteps=Build Automation;Build Automation.xojo_code;&h00000000471B47FF;&h0000000000000000;false
 RawData=credentials;credentials.txt;&h00000000093ED7FF;&h0000000000000000;false

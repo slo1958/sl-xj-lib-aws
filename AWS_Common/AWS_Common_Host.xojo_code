@@ -62,6 +62,11 @@ Protected Class AWS_Common_Host
 		  
 		  var tmp_signedheaders as string = self.GetListSignedHeaders(Headers)
 		  
+		  app.write_s3_sep(self.LogFileName,"AUTHORISATION")
+		  app.write_s3_log(self.LogFileName, "Canonical request",chr(10) +  tmp_canonical_request)
+		  app.write_s3_log(self.LogFileName,"Signature", tmp_signature)
+		  app.write_s3_log(self.LogFileName,"Signed headers", tmp_signedheaders)
+		  
 		  var tmp_auth_str as string
 		  
 		  var tmp_credential_elements() as string
@@ -83,6 +88,8 @@ Protected Class AWS_Common_Host
 		  tmp_auth_str = tmp_auth_str + ","
 		  tmp_auth_str = tmp_auth_str + "Signature="+tmp_signature
 		  
+		  app.write_s3_log(self.LogFileName,"Calc authorisation", tmp_auth_str)
+		  
 		  return tmp_auth_str
 		  
 		  
@@ -96,9 +103,13 @@ Protected Class AWS_Common_Host
 		  var tmp_elements() as string
 		  
 		  for each header as AWS_Request_Header in Headers
-		    var tmp_name as string =  header.Name.Lowercase()
-		    tmp_list.Append(tmp_name)
-		    tmp_dct.Value(tmp_name) = header
+		    if header.AddToSignature then // 2025-08-26 20:23
+		      var tmp_name as string =  header.Name.Lowercase()
+		      tmp_list.Append(tmp_name)
+		      tmp_dct.Value(tmp_name) = header
+		      
+		    end if
+		    
 		  next
 		  
 		  tmp_list.sort()
@@ -298,6 +309,14 @@ Protected Class AWS_Common_Host
 		  var fmt_scope as string = fmt_date_short +"/" + self.AWSRegion + "/"+ self.AWSService + "/aws4_request"
 		  var hashed_request as String = MemoryBlockToHex(Crypto.SHA256(tmp_CanonicalRequest)).Lowercase()
 		  
+		  app.write_s3_sep(LogFileName, "Create string to sign")
+		  app.write_s3_log(LogFileName, "Hash type", tmp_hashType)
+		  app.write_s3_log(LogFileName, "ISO Date/time", fmt_date)
+		  app.write_s3_log(LogFileName, "Scope", fmt_scope)
+		  app.write_s3_log(LogFileName, "Canonical request hash", hashed_request)
+		  app.write_s3_sep(LogFileName)
+		  
+		  
 		  var tmp_elements() as String
 		  
 		  tmp_elements.Append(tmp_hashType)
@@ -318,6 +337,11 @@ Protected Class AWS_Common_Host
 		  var tmp3_service as MemoryBlock = HMAC_SHA256(tmp2_region, self.AWSService)
 		  var tmp4_request as MemoryBlock = HMAC_SHA256(tmp3_service, "aws4_request")
 		  var tmp5_signature as string = MemoryBlockToHex(HMAC_SHA256(tmp4_request, StringToSign)).Lowercase()
+		  
+		  app.write_s3_sep(LogFileName, "Signing")
+		  app.write_s3_log(LogFileName, "Signing key",  MemoryBlockToHex(tmp4_request))
+		  app.write_s3_log(LogFileName, "Signature", tmp5_signature)
+		  app.write_s3_sep(LogFileName)
 		  
 		  return tmp5_signature
 		  
@@ -479,12 +503,38 @@ Protected Class AWS_Common_Host
 		  
 		  self.RequestDateTime = new date() // 2024,9,14,21,55,28,0)
 		  
+		  LogFileName = self.RequestDateTime.SQLDateTime.ReplaceAll(":","-") + ".txt"
+		  
 		  '
 		  ' Add AWS headers
 		  '
+		  app.write_s3_log(LogFileName, "HTTP Method", HTTPMethod)
+		  app.write_s3_log(LogFileName, "Host", Host)
+		  app.write_s3_log(LogFileName, "URI", URI)
+		  
+		  app.write_s3_sep(LogFileName,"Query params")
+		  
+		  for each k as string in QueryParams.keys
+		    app.write_s3_log(LogFileName, k, QueryParams.Value(k))
+		    
+		  next
+		  
+		  app.write_s3_sep(LogFileName,"Payload")
+		  
+		  if payload.Length > 100 then
+		    App.write_s3_log(LogFileName, "", left(payload, 99)+"...")
+		    
+		  else
+		    App.write_s3_log(LogFileName, "", payload)
+		    
+		  end if
+		  
+		  app.write_s3_log(LogFileName,"","")
 		  
 		  var payload_hash as string = self.GetHashedPayload(payload)
 		  var formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
+		  
+		  app.write_s3_log(LogFileName, "Payload hash", payload_hash)
 		  
 		  var Headers() as AWS_Request_Header
 		  for each item as AWS_Request_Header in UserHeaders
@@ -492,10 +542,20 @@ Protected Class AWS_Common_Host
 		    
 		  next
 		  
-		  
 		  Headers.Append(new AWS_Request_Header("host" ,Host, True))
 		  Headers.Append(new AWS_Request_Header("x-amz-content-sha256", payload_hash, True))
 		  Headers.Append(new AWS_Request_Header("x-amz-date",formatted_timestamp, True))
+		  
+		  
+		  app.write_s3_sep(LogFileName,"Request headers")
+		  
+		  for each item as AWS_Request_Header in Headers
+		    var kv as string = " "
+		    if item.AddToSignature then kv="*"
+		    app.write_s3_log(LogFileName, kv + item.Name, item.Value)
+		    
+		  next
+		  
 		  
 		  var tmp_method as string = HTTPMethod
 		  var tmp_host as string = Host
@@ -522,10 +582,19 @@ Protected Class AWS_Common_Host
 		    
 		  end if
 		  
-		  var url as string = "https://" +  host + uri ' "s3.eu-west-3.amazonaws.com"
+		  
+		  
+		  app.write_s3_sep(LogFileName, "REQUEST")
+		  
+		  var url as string = "https://" +  host + UriEncode(uri, true) ' "s3.eu-west-3.amazonaws.com"
 		  
 		  var timeout as integer = 30
 		  var reply as new AWS_Reply
+		  
+		  app.write_s3_log(LogFileName, "HTTPMethod", HTTPMethod)
+		  app.write_s3_log(LogFileName, "URL", url)
+		  
+		  app.write_s3_sep(LogFileName,"")
 		  
 		  reply.ReplyText = ct.SendSync(HTTPMethod, url, timeout)
 		  
@@ -663,6 +732,10 @@ Protected Class AWS_Common_Host
 
 	#tag Property, Flags = &h0
 		CanonicalRequestElements() As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		LogFileName As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
