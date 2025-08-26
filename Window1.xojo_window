@@ -800,7 +800,7 @@ End
 	#tag Event
 		Sub Opening()
 		  
-		  var s3 as new AWS_S3_Test
+		  //var s3 as new AWS_S3_Test
 		  
 		  //s3.test_all
 		  
@@ -812,7 +812,7 @@ End
 		Sub get_list_of_buckets()
 		  
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request  as new AWS_S3_ListBuckets()
 		  
@@ -879,7 +879,7 @@ End
 		  
 		  lbl_selectedBucket.text = selected_bucket
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_ListObjectsInBucket(selected_bucket)
 		  
@@ -949,7 +949,7 @@ End
 		  end try
 		  
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_GetObject(selected_bucket,selected_object)
 		  
@@ -1014,7 +1014,7 @@ End
 		  //
 		  // Request an existing object in an existing  bucket
 		  //
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_GetObject(DefaultBucket,DefaultObjectName)
 		  
@@ -1044,7 +1044,7 @@ End
 		Sub test_get_list_buckets()
 		  
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request  as new AWS_S3_ListBuckets()
 		  
@@ -1089,7 +1089,7 @@ End
 		  //
 		  // Request objects in a non existant bucket
 		  //
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_ListObjectsInBucket("sl58-aws-bucket-001xx")
 		  
@@ -1132,7 +1132,7 @@ End
 		  //
 		  // Request objects in a bucket
 		  //
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_ListObjectsInBucket(DefaultBucket)
 		  
@@ -1176,7 +1176,7 @@ End
 		  //
 		  // Request a non existing object in an existing  bucket
 		  //
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001","I2C/i2c.hxyz")
 		  
@@ -1204,7 +1204,7 @@ End
 		  //
 		  // Request an object in a non existing  bucket
 		  //
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_GetObject("sl58-aws-bucket-001xyz","I2C/i2c.h")
 		  
@@ -1237,7 +1237,7 @@ End
 		  var ObjName as string = "longObjects/MyObject-" +DateTime.Now.SQLDateTime
 		   
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_PutObject(DefaultBucket, new AWS_S3_item(ObjName, ObjText))
 		  
@@ -1272,7 +1272,7 @@ End
 		  var ObjName as string = "shortObjects/MyObject-" +DateTime.Now.SQLDateTime
 		  
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_PutObject(DefaultBucket, new AWS_S3_item(ObjName, ObjText))
 		  
@@ -1302,6 +1302,9 @@ End
 	#tag EndConstant
 
 	#tag Constant, Name = DefaultObjectName, Type = String, Dynamic = False, Default = \"I2C/i2c.h", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = DefaultTraceMode, Type = Boolean, Dynamic = False, Default = \"True", Scope = Public
 	#tag EndConstant
 
 
@@ -1369,7 +1372,7 @@ End
 		  
 		  
 		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials)
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
 		  
 		  var s3_request as new AWS_S3_PutObject(selected_bucket, new AWS_S3_item(ObjName, ObjText))
 		  

@@ -29,13 +29,16 @@ Protected Class AWS_Common_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(credentials as Dictionary)
+		Sub Constructor(credentials as Dictionary, TraceRequest as boolean)
 		  
 		  self.AWSAccessKeyId = credentials.value("aws_access_key_id")
 		  self.AWSSecretAccessKey = credentials.value("aws_secret_access_key")
 		  self.AWSRegion = credentials.lookup("aws_region", "us-east-1")
 		  self.AWSService = "??"
 		  
+		  self.TraceMode = TraceRequest
+		  
+		  S3Log_CheckFolder()
 		  
 		  
 		  
@@ -48,6 +51,11 @@ Protected Class AWS_Common_Host
 		  self.AWSSecretAccessKey = theAWSSecretKey.trim()
 		  self.AWSRegion = theRegion.trim() 
 		  self.AWSService = "??"
+		  
+		  self.TraceMode = False
+		  
+		  S3Log_CheckFolder()
+		  
 		End Sub
 	#tag EndMethod
 
@@ -62,10 +70,10 @@ Protected Class AWS_Common_Host
 		  
 		  var tmp_signedheaders as string = self.GetListSignedHeaders(Headers)
 		  
-		  app.write_s3_sep(self.LogFileName,"AUTHORISATION")
-		  app.write_s3_log(self.LogFileName, "Canonical request",chr(10) +  tmp_canonical_request)
-		  app.write_s3_log(self.LogFileName,"Signature", tmp_signature)
-		  app.write_s3_log(self.LogFileName,"Signed headers", tmp_signedheaders)
+		  self.S3Log_WriteSep(self.LogFileName,"AUTHORISATION")
+		  self.S3Log_WriteMessage(self.LogFileName, "Canonical request",chr(10) +  tmp_canonical_request)
+		  self.S3Log_WriteMessage(self.LogFileName,"Signature", tmp_signature)
+		  self.S3Log_WriteMessage(self.LogFileName,"Signed headers", tmp_signedheaders)
 		  
 		  var tmp_auth_str as string
 		  
@@ -88,7 +96,7 @@ Protected Class AWS_Common_Host
 		  tmp_auth_str = tmp_auth_str + ","
 		  tmp_auth_str = tmp_auth_str + "Signature="+tmp_signature
 		  
-		  app.write_s3_log(self.LogFileName,"Calc authorisation", tmp_auth_str)
+		  self.S3Log_WriteMessage(self.LogFileName,"Calc authorisation", tmp_auth_str)
 		  
 		  return tmp_auth_str
 		  
@@ -309,12 +317,12 @@ Protected Class AWS_Common_Host
 		  var fmt_scope as string = fmt_date_short +"/" + self.AWSRegion + "/"+ self.AWSService + "/aws4_request"
 		  var hashed_request as String = MemoryBlockToHex(Crypto.SHA256(tmp_CanonicalRequest)).Lowercase()
 		  
-		  app.write_s3_sep(LogFileName, "Create string to sign")
-		  app.write_s3_log(LogFileName, "Hash type", tmp_hashType)
-		  app.write_s3_log(LogFileName, "ISO Date/time", fmt_date)
-		  app.write_s3_log(LogFileName, "Scope", fmt_scope)
-		  app.write_s3_log(LogFileName, "Canonical request hash", hashed_request)
-		  app.write_s3_sep(LogFileName)
+		  self.S3Log_WriteSep(LogFileName, "Create string to sign")
+		  self.S3Log_WriteMessage(LogFileName, "Hash type", tmp_hashType)
+		  self.S3Log_WriteMessage(LogFileName, "ISO Date/time", fmt_date)
+		  self.S3Log_WriteMessage(LogFileName, "Scope", fmt_scope)
+		  self.S3Log_WriteMessage(LogFileName, "Canonical request hash", hashed_request)
+		  self.S3Log_WriteSep(LogFileName)
 		  
 		  
 		  var tmp_elements() as String
@@ -338,10 +346,10 @@ Protected Class AWS_Common_Host
 		  var tmp4_request as MemoryBlock = HMAC_SHA256(tmp3_service, "aws4_request")
 		  var tmp5_signature as string = MemoryBlockToHex(HMAC_SHA256(tmp4_request, StringToSign)).Lowercase()
 		  
-		  app.write_s3_sep(LogFileName, "Signing")
-		  app.write_s3_log(LogFileName, "Signing key",  MemoryBlockToHex(tmp4_request))
-		  app.write_s3_log(LogFileName, "Signature", tmp5_signature)
-		  app.write_s3_sep(LogFileName)
+		  self.S3Log_WriteSep(LogFileName, "Signing")
+		  self.S3Log_WriteMessage(LogFileName, "Signing key",  MemoryBlockToHex(tmp4_request))
+		  self.S3Log_WriteMessage(LogFileName, "Signature", tmp5_signature)
+		  self.S3Log_WriteSep(LogFileName)
 		  
 		  return tmp5_signature
 		  
@@ -508,33 +516,33 @@ Protected Class AWS_Common_Host
 		  '
 		  ' Add AWS headers
 		  '
-		  app.write_s3_log(LogFileName, "HTTP Method", HTTPMethod)
-		  app.write_s3_log(LogFileName, "Host", Host)
-		  app.write_s3_log(LogFileName, "URI", URI)
+		  self.S3Log_WriteMessage(LogFileName, "HTTP Method", HTTPMethod)
+		  self.S3Log_WriteMessage(LogFileName, "Host", Host)
+		  self.S3Log_WriteMessage(LogFileName, "URI", URI)
 		  
-		  app.write_s3_sep(LogFileName,"Query params")
+		  self.S3Log_WriteSep(LogFileName,"Query params")
 		  
 		  for each k as string in QueryParams.keys
-		    app.write_s3_log(LogFileName, k, QueryParams.Value(k))
+		    self.S3Log_WriteMessage(LogFileName, k, QueryParams.Value(k))
 		    
 		  next
 		  
-		  app.write_s3_sep(LogFileName,"Payload")
+		  self.S3Log_WriteSep(LogFileName,"Payload")
 		  
 		  if payload.Length > 100 then
-		    App.write_s3_log(LogFileName, "", left(payload, 99)+"...")
+		    self.S3Log_WriteMessage(LogFileName, "", left(payload, 99)+"...")
 		    
 		  else
-		    App.write_s3_log(LogFileName, "", payload)
+		    self.S3Log_WriteMessage(LogFileName, "", payload)
 		    
 		  end if
 		  
-		  app.write_s3_log(LogFileName,"","")
+		  self.S3Log_WriteMessage(LogFileName,"","")
 		  
 		  var payload_hash as string = self.GetHashedPayload(payload)
 		  var formatted_timestamp as string = self.TimeStampISO8601Format(self.RequestDateTime)
 		  
-		  app.write_s3_log(LogFileName, "Payload hash", payload_hash)
+		  self.S3Log_WriteMessage(LogFileName, "Payload hash", payload_hash)
 		  
 		  var Headers() as AWS_Request_Header
 		  for each item as AWS_Request_Header in UserHeaders
@@ -547,12 +555,12 @@ Protected Class AWS_Common_Host
 		  Headers.Append(new AWS_Request_Header("x-amz-date",formatted_timestamp, True))
 		  
 		  
-		  app.write_s3_sep(LogFileName,"Request headers")
+		  self.S3Log_WriteSep(LogFileName,"Request headers")
 		  
 		  for each item as AWS_Request_Header in Headers
 		    var kv as string = " "
 		    if item.AddToSignature then kv="*"
-		    app.write_s3_log(LogFileName, kv + item.Name, item.Value)
+		    self.S3Log_WriteMessage(LogFileName, kv + item.Name, item.Value)
 		    
 		  next
 		  
@@ -584,17 +592,17 @@ Protected Class AWS_Common_Host
 		  
 		  
 		  
-		  app.write_s3_sep(LogFileName, "REQUEST")
+		  self.S3Log_WriteSep(LogFileName, "REQUEST")
 		  
 		  var url as string = "https://" +  host + UriEncode(uri, true) ' "s3.eu-west-3.amazonaws.com"
 		  
 		  var timeout as integer = 30
 		  var reply as new AWS_Reply
 		  
-		  app.write_s3_log(LogFileName, "HTTPMethod", HTTPMethod)
-		  app.write_s3_log(LogFileName, "URL", url)
+		  self.S3Log_WriteMessage(LogFileName, "HTTPMethod", HTTPMethod)
+		  self.S3Log_WriteMessage(LogFileName, "URL", url)
 		  
-		  app.write_s3_sep(LogFileName,"")
+		  self.S3Log_WriteSep(LogFileName,"")
 		  
 		  reply.ReplyText = ct.SendSync(HTTPMethod, url, timeout)
 		  
@@ -606,6 +614,85 @@ Protected Class AWS_Common_Host
 		  return reply
 		  
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub S3Log_CheckFolder()
+		  
+		  if not self.TraceMode then return
+		  
+		  var file as FolderItem = S3Log_FolderName()
+		  
+		  if not file.Exists then file.CreateAsFolder
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function S3Log_FolderName() As FolderItem
+		  return SpecialFolder.Desktop.Child("AWS_S3_LOGS")
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub S3Log_WriteMessage(filename as string, key as String, Value as string)
+		  
+		  if not self.TraceMode then return
+		  
+		  if filename.Length < 1 then return
+		  
+		  var file as FolderItem = S3Log_FolderName()
+		  
+		  file = file.Child(filename)
+		  
+		  var tout as TextOutputStream = TextOutputStream.Append(file)
+		  
+		  if key.Length = 0 then
+		    tout.WriteLine(value)
+		    
+		  else
+		    tout.WriteLine(key + ":" + value)
+		    
+		  end if
+		  
+		  tout.Close
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub S3Log_WriteSep(filename as string, title as string = "")
+		  
+		  if not self.TraceMode then return
+		  
+		  if filename.Length < 1 then return
+		  
+		  var file as FolderItem = S3Log_FolderName()
+		  
+		  file = file.Child(filename)
+		  
+		  var tout as TextOutputStream = TextOutputStream.Append(file)
+		  
+		  tout.WriteLine("-----------" + title  + "--------------")
+		  
+		  tout.Close
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SetTraceMode(NewTraceMode as Boolean)
+		  
+		  self.TraceMode = NewTraceMode
+		  
+		  if NewTraceMode then
+		    self.S3Log_CheckFolder
+		    
+		  end if
+		  
+		  return
+		  
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -744,6 +831,10 @@ Protected Class AWS_Common_Host
 
 	#tag Property, Flags = &h0
 		StringToSignElements() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		TraceMode As Boolean
 	#tag EndProperty
 
 

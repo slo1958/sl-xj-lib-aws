@@ -3,62 +3,9 @@ Protected Class App
 Inherits DesktopApplication
 	#tag Event
 		Sub Opening()
-		  var file as FolderItem
-		  
-		  if not AWS_DEFAULT_TRACE_MODE then return
-		  
-		  file = SpecialFolder.Desktop.child("AWS_S3_LOGS")
-		  
-		  if not file.Exists then file.CreateAsFolder
 		  
 		End Sub
 	#tag EndEvent
-
-
-	#tag Method, Flags = &h0
-		Sub write_s3_log(filename as string, key as String, Value as string)
-		  
-		  if not AWS_DEFAULT_TRACE_MODE then return
-		  
-		  if filename.Length < 1 then return
-		  
-		  var file as FolderItem = SpecialFolder.Desktop.Child("AWS_S3_LOGS")
-		  
-		  file = file.Child(filename)
-		  
-		  var tout as TextOutputStream = TextOutputStream.Append(file)
-		  
-		  if key.Length = 0 then
-		    tout.WriteLine(value)
-		    
-		  else
-		    tout.WriteLine(key + ":" + value)
-		    
-		  end if
-		  
-		  tout.Close
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub write_s3_sep(filename as string, title as string = "")
-		  
-		  if not AWS_DEFAULT_TRACE_MODE then return
-		  if filename.Length < 1 then return
-		  
-		  var file as FolderItem = SpecialFolder.Desktop.Child("AWS_S3_LOGS")
-		  
-		  file = file.Child(filename)
-		  
-		  var tout as TextOutputStream = TextOutputStream.Append(file)
-		  
-		  tout.WriteLine("-----------" + title  + "--------------")
-		  
-		  tout.Close
-		  
-		End Sub
-	#tag EndMethod
 
 
 	#tag Note, Name = Untitled
@@ -154,9 +101,6 @@ Inherits DesktopApplication
 		
 	#tag EndNote
 
-
-	#tag Constant, Name = AWS_DEFAULT_TRACE_MODE, Type = Boolean, Dynamic = False, Default = \"True", Scope = Public
-	#tag EndConstant
 
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"&Delete"

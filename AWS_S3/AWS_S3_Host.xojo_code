@@ -2,13 +2,9 @@
 Protected Class AWS_S3_Host
 Inherits AWS_Common_Host
 	#tag Method, Flags = &h0
-		Sub Constructor(credentials as Dictionary)
-		  // Calling the overridden superclass constructor.
-		  // Note that this may need modifications if there are multiple constructor choices.
-		  // Possible constructor calls:
-		  // Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string="us-east-1") -- From AWS_Common_Host
-		  // Constructor(credentials as Dictionary) -- From AWS_Common_Host
-		  Super.Constructor(credentials)
+		Sub Constructor(credentials as Dictionary, traceRequest as boolean)
+		  
+		  Super.Constructor(credentials, TraceRequest)
 		  
 		  AWSService = "s3"
 		  
@@ -30,25 +26,33 @@ Inherits AWS_Common_Host
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="AWSAccessKeyId"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSRegion"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSSecretAccessKey"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSService"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -58,6 +62,7 @@ Inherits AWS_Common_Host
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -65,18 +70,23 @@ Inherits AWS_Common_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -84,6 +94,7 @@ Inherits AWS_Common_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
