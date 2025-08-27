@@ -18,6 +18,7 @@ Class=AWS_Request_Header;AWS_Common/AWS_Request_Header.xojo_code;&h000000001DDC8
 Class=AWS_Reply;AWS_Common/AWS_Reply.xojo_code;&h0000000027632FFF;&h000000000C343FFF;false
 Folder=Requests;AWS_S3/Requests;&h000000003043F7FF;&h000000006AF617FF;false
 Class=AWS_S3_GetObject;AWS_S3/Requests/AWS_S3_GetObject.xojo_code;&h000000001C4FEFFF;&h000000003043F7FF;false
+Class=AWS_S3_DeleteObject;AWS_S3/Requests/AWS_S3_DeleteObject.xojo_code;&h0000000006D70FFF;&h000000003043F7FF;false
 Class=AWS_S3_PutObject;AWS_S3/Requests/AWS_S3_PutObject.xojo_code;&h000000006DB49FFF;&h000000003043F7FF;false
 Class=AWS_S3_ListBuckets;AWS_S3/Requests/AWS_S3_ListBuckets.xojo_code;&h000000004BC257FF;&h000000003043F7FF;false
 Class=AWS_S3_ListObjectsInBucket;AWS_S3/Requests/AWS_S3_ListObjectsInBucket.xojo_code;&h000000001601AFFF;&h000000003043F7FF;false

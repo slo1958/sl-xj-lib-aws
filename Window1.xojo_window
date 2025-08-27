@@ -26,19 +26,13 @@ Begin DesktopWindow Window1
    Visible         =   True
    Width           =   1000
    Begin DesktopTextArea TextArea1
-      AcceptTabs      =   "False"
-      Alignment       =   "0"
       AllowAutoDeactivate=   True
       AllowFocusRing  =   True
       AllowSpellChecking=   True
       AllowStyledText =   True
       AllowTabs       =   False
-      AutoDeactivate  =   "True"
-      AutomaticallyCheckSpelling=   "True"
-      BackColor       =   "&cFFFFFF00"
       BackgroundColor =   &cFFFFFF
       Bold            =   False
-      Border          =   "True"
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
@@ -48,12 +42,10 @@ Begin DesktopWindow Window1
       HasHorizontalScrollbar=   False
       HasVerticalScrollbar=   True
       Height          =   447
-      HelpTag         =   ""
       HideSelection   =   True
       Index           =   -2147483648
       Italic          =   False
       Left            =   496
-      LimitText       =   "0"
       LineHeight      =   0.0
       LineSpacing     =   1.0
       LockBottom      =   True
@@ -61,29 +53,21 @@ Begin DesktopWindow Window1
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      Mask            =   ""
       MaximumCharactersAllowed=   0
       Multiline       =   True
       ReadOnly        =   False
       Scope           =   0
-      ScrollbarHorizontal=   "False"
-      ScrollbarVertical=   "True"
-      Styled          =   "True"
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   198
       Transparent     =   False
       Underline       =   False
       UnicodeMode     =   0
-      UseFocusRing    =   "True"
       ValidationMask  =   ""
       Visible         =   True
       Width           =   484
@@ -96,31 +80,22 @@ Begin DesktopWindow Window1
       AllowResizableColumns=   False
       AllowRowDragging=   False
       AllowRowReordering=   False
-      AutoDeactivate  =   "True"
-      AutoHideScrollbars=   "True"
       Bold            =   False
-      Border          =   "True"
       ColumnCount     =   1
-      ColumnsResizable=   "False"
       ColumnWidths    =   ""
       DefaultRowHeight=   -1
       DropIndicatorVisible=   False
       Enabled         =   True
-      EnableDrag      =   "False"
-      EnableDragReorder=   "False"
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       GridLineStyle   =   0
       HasBorder       =   True
       HasHeader       =   True
-      HasHeading      =   "False"
       HasHorizontalScrollbar=   False
       HasVerticalScrollbar=   True
       HeadingIndex    =   -1
       Height          =   200
-      HelpTag         =   ""
-      Hierarchical    =   "False"
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
@@ -134,21 +109,13 @@ Begin DesktopWindow Window1
       RequiresSelection=   False
       RowSelectionType=   0
       Scope           =   0
-      ScrollbarHorizontal=   "False"
-      ScrollBarVertical=   "True"
-      SelectionType   =   "0"
-      ShowDropIndicator=   "False"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   198
       Transparent     =   False
       Underline       =   False
-      UseFocusRing    =   "True"
       Visible         =   True
       Width           =   455
       _ScrollOffset   =   0
@@ -156,9 +123,7 @@ Begin DesktopWindow Window1
    End
    Begin DesktopButton pb_get_buckets
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
-      ButtonStyle     =   "0"
       Cancel          =   False
       Caption         =   "Buckets"
       Default         =   False
@@ -167,7 +132,6 @@ Begin DesktopWindow Window1
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -182,9 +146,6 @@ Begin DesktopWindow Window1
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   29
       Transparent     =   False
@@ -194,9 +155,7 @@ Begin DesktopWindow Window1
    End
    Begin DesktopButton pb_objects_in_bucket
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
-      ButtonStyle     =   "0"
       Cancel          =   False
       Caption         =   "Objects in bucket"
       Default         =   False
@@ -205,7 +164,6 @@ Begin DesktopWindow Window1
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -220,9 +178,6 @@ Begin DesktopWindow Window1
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   166
       Transparent     =   False
@@ -232,9 +187,7 @@ Begin DesktopWindow Window1
    End
    Begin DesktopButton pb_get_content
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
-      ButtonStyle     =   "0"
       Cancel          =   False
       Caption         =   "Get content"
       Default         =   False
@@ -243,7 +196,6 @@ Begin DesktopWindow Window1
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -258,26 +210,21 @@ Begin DesktopWindow Window1
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   410
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   143
+      Width           =   91
    End
    Begin DesktopLabel Label1
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -294,12 +241,8 @@ Begin DesktopWindow Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Untitled"
-      TextAlign       =   "0"
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   657
       Transparent     =   True
@@ -309,14 +252,12 @@ Begin DesktopWindow Window1
    End
    Begin DesktopLabel Label2
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -333,12 +274,8 @@ Begin DesktopWindow Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Untitled"
-      TextAlign       =   "0"
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   657
       Transparent     =   True
@@ -354,31 +291,22 @@ Begin DesktopWindow Window1
       AllowResizableColumns=   False
       AllowRowDragging=   False
       AllowRowReordering=   False
-      AutoDeactivate  =   "True"
-      AutoHideScrollbars=   "True"
       Bold            =   False
-      Border          =   "True"
       ColumnCount     =   1
-      ColumnsResizable=   "False"
       ColumnWidths    =   ""
       DefaultRowHeight=   -1
       DropIndicatorVisible=   False
       Enabled         =   True
-      EnableDrag      =   "False"
-      EnableDragReorder=   "False"
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       GridLineStyle   =   0
       HasBorder       =   True
       HasHeader       =   True
-      HasHeading      =   "False"
       HasHorizontalScrollbar=   False
       HasVerticalScrollbar=   True
       HeadingIndex    =   -1
       Height          =   94
-      HelpTag         =   ""
-      Hierarchical    =   "False"
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
@@ -392,40 +320,26 @@ Begin DesktopWindow Window1
       RequiresSelection=   False
       RowSelectionType=   0
       Scope           =   0
-      ScrollbarHorizontal=   "False"
-      ScrollBarVertical=   "True"
-      SelectionType   =   "0"
-      ShowDropIndicator=   "False"
       TabIndex        =   13
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   61
       Transparent     =   False
       Underline       =   False
-      UseFocusRing    =   "True"
       Visible         =   True
       Width           =   455
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
    Begin DesktopTextArea ta_file_content
-      AcceptTabs      =   "False"
-      Alignment       =   "0"
       AllowAutoDeactivate=   True
       AllowFocusRing  =   True
       AllowSpellChecking=   True
       AllowStyledText =   True
       AllowTabs       =   False
-      AutoDeactivate  =   "True"
-      AutomaticallyCheckSpelling=   "True"
-      BackColor       =   "&cFFFFFF00"
       BackgroundColor =   &cFFFFFF
       Bold            =   False
-      Border          =   "True"
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
@@ -435,12 +349,10 @@ Begin DesktopWindow Window1
       HasHorizontalScrollbar=   False
       HasVerticalScrollbar=   True
       Height          =   203
-      HelpTag         =   ""
       HideSelection   =   True
       Index           =   -2147483648
       Italic          =   False
       Left            =   20
-      LimitText       =   "0"
       LineHeight      =   0.0
       LineSpacing     =   1.0
       LockBottom      =   True
@@ -448,43 +360,33 @@ Begin DesktopWindow Window1
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Mask            =   ""
       MaximumCharactersAllowed=   0
       Multiline       =   True
       ReadOnly        =   False
       Scope           =   0
-      ScrollbarHorizontal=   "False"
-      ScrollbarVertical=   "True"
-      Styled          =   "True"
       TabIndex        =   14
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   442
       Transparent     =   False
       Underline       =   False
       UnicodeMode     =   0
-      UseFocusRing    =   "True"
       ValidationMask  =   ""
       Visible         =   True
       Width           =   455
    End
    Begin DesktopLabel lbl_selectedBucket
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -501,12 +403,8 @@ Begin DesktopWindow Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "-"
-      TextAlign       =   "0"
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   166
       Transparent     =   True
@@ -516,18 +414,16 @@ Begin DesktopWindow Window1
    End
    Begin DesktopLabel lbl_selectedObject
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   175
+      Left            =   123
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -540,29 +436,23 @@ Begin DesktopWindow Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "-"
-      TextAlign       =   "0"
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   410
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   300
+      Width           =   244
    End
    Begin DesktopLabel Label5
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -579,12 +469,8 @@ Begin DesktopWindow Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Navigation"
-      TextAlign       =   "0"
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   29
       Transparent     =   True
@@ -594,9 +480,7 @@ Begin DesktopWindow Window1
    End
    Begin DesktopButton pb_save_object
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
-      ButtonStyle     =   "0"
       Cancel          =   False
       Caption         =   "Save file"
       Default         =   False
@@ -605,7 +489,6 @@ Begin DesktopWindow Window1
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -620,9 +503,6 @@ Begin DesktopWindow Window1
       TabIndex        =   25
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   657
       Transparent     =   False
@@ -632,14 +512,12 @@ Begin DesktopWindow Window1
    End
    Begin DesktopLabel Label7
       AllowAutoDeactivate=   True
-      AutoDeactivate  =   "True"
       Bold            =   False
       Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
       Height          =   20
-      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -656,12 +534,8 @@ Begin DesktopWindow Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Query results"
-      TextAlign       =   "0"
       TextAlignment   =   0
       TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   "0.0"
-      TextUnit        =   "0"
       Tooltip         =   ""
       Top             =   166
       Transparent     =   True
@@ -698,14 +572,12 @@ Begin DesktopWindow Window1
       Width           =   484
       Begin DesktopLabel Label6
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
          Enabled         =   True
          FontName        =   "System"
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          Italic          =   False
@@ -722,12 +594,8 @@ Begin DesktopWindow Window1
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "Test Ok behaviour"
-         TextAlign       =   "0"
          TextAlignment   =   0
          TextColor       =   &c00000000
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   88
          Transparent     =   True
@@ -737,14 +605,12 @@ Begin DesktopWindow Window1
       End
       Begin DesktopLabel Label4
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
          Enabled         =   True
          FontName        =   "System"
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          Italic          =   False
@@ -761,12 +627,8 @@ Begin DesktopWindow Window1
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "(using fixed parameters)"
-         TextAlign       =   "0"
          TextAlignment   =   0
          TextColor       =   &c00000000
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   116
          Transparent     =   True
@@ -776,14 +638,12 @@ Begin DesktopWindow Window1
       End
       Begin DesktopLabel Label3
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
          Enabled         =   True
          FontName        =   "System"
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          Italic          =   False
@@ -800,12 +660,8 @@ Begin DesktopWindow Window1
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "Test error behaviour"
-         TextAlign       =   "0"
          TextAlignment   =   0
          TextColor       =   &c00000000
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   56
          Transparent     =   True
@@ -815,9 +671,7 @@ Begin DesktopWindow Window1
       End
       Begin DesktopButton pb_run_ok_test
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
-         ButtonStyle     =   "0"
          Cancel          =   False
          Caption         =   "Run test"
          Default         =   False
@@ -826,7 +680,6 @@ Begin DesktopWindow Window1
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          Italic          =   False
@@ -841,9 +694,6 @@ Begin DesktopWindow Window1
          TabIndex        =   3
          TabPanelIndex   =   0
          TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   88
          Transparent     =   False
@@ -853,9 +703,7 @@ Begin DesktopWindow Window1
       End
       Begin DesktopButton pb_run_err_test
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
-         ButtonStyle     =   "0"
          Cancel          =   False
          Caption         =   "Run test"
          Default         =   False
@@ -864,7 +712,6 @@ Begin DesktopWindow Window1
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          Italic          =   False
@@ -879,9 +726,6 @@ Begin DesktopWindow Window1
          TabIndex        =   4
          TabPanelIndex   =   0
          TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   56
          Transparent     =   False
@@ -891,20 +735,17 @@ Begin DesktopWindow Window1
       End
       Begin DesktopPopupMenu pm_ok_tests
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
          Enabled         =   True
          FontName        =   "System"
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          InitialValue    =   ""
          Italic          =   False
          Left            =   684
-         ListIndex       =   "-1"
          LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
@@ -915,9 +756,6 @@ Begin DesktopWindow Window1
          TabIndex        =   5
          TabPanelIndex   =   0
          TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   88
          Transparent     =   False
@@ -927,20 +765,17 @@ Begin DesktopWindow Window1
       End
       Begin DesktopPopupMenu pm_err_tests
          AllowAutoDeactivate=   True
-         AutoDeactivate  =   "True"
          Bold            =   False
          Enabled         =   True
          FontName        =   "System"
          FontSize        =   0.0
          FontUnit        =   0
          Height          =   20
-         HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          InitialValue    =   ""
          Italic          =   False
          Left            =   684
-         ListIndex       =   "0"
          LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
@@ -951,9 +786,6 @@ Begin DesktopWindow Window1
          TabIndex        =   6
          TabPanelIndex   =   0
          TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   "0.0"
-         TextUnit        =   "0"
          Tooltip         =   ""
          Top             =   56
          Transparent     =   False
@@ -962,16 +794,98 @@ Begin DesktopWindow Window1
          Width           =   196
       End
    End
+   Begin DesktopButton pb_delete_object
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      Cancel          =   False
+      Caption         =   "Delete"
+      Default         =   False
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   20
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   387
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MacButtonStyle  =   0
+      Scope           =   0
+      TabIndex        =   35
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Tooltip         =   ""
+      Top             =   410
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   88
+   End
 End
 #tag EndDesktopWindow
 
 #tag WindowCode
 	#tag Event
 		Sub Opening()
-		   
+		  
 		End Sub
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h0
+		Sub delete_object()
+		  //
+		  // Delete an existing object from an existing  bucket
+		  //
+		  
+		  
+		  var selected_bucket as string = get_user_selected_bucket(True)
+		  
+		  if selected_bucket.length = 0 then  return
+		  
+		  var selected_object as string
+		  
+		  try
+		    selected_object = self.lb_objects.CellTextAt(lb_objects.SelectedRowIndex,0)
+		    lbl_selectedObject.text = selected_object
+		    
+		  Catch
+		    lbl_selectedObject.text =  ""
+		    MessageBox("Please select an object")
+		    return 
+		    
+		  end try
+		  
+		  
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
+		  
+		  var s3_request as new AWS_S3_DeleteObject(selected_bucket,selected_object)
+		  
+		  var ret_status as string  = s3_request.SendRequest(s3_host)
+		   
+		  
+		  if s3_request.ErrorInfo = nil then
+		    label1.Text = ""
+		    label2.Text = ""
+		    
+		  else
+		    label1.text = s3_request.ErrorInfo.Code
+		    label2.text = s3_request.ErrorInfo.Message
+		    
+		  end if
+		  
+		  TextArea1.text =  ret_status
+		  
+		  return
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub get_list_of_buckets()
@@ -1172,6 +1086,73 @@ End
 		  return ret
 		  
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub put_file()
+		  
+		  
+		  if get_user_selected_bucket(true) = "" then return
+		  
+		  var fs as FolderItem = GetOpenFolderItem("")
+		  var tt as TextInputStream
+		  
+		  if fs = nil then return 
+		  
+		  if fs.IsFolder then 
+		    MessageBox("Please select a flle, not a folder.")
+		    return 
+		  end if
+		  
+		  
+		  tt = TextInputStream.Open(fs)
+		  
+		  var objName as string = "savedObjects/" + fs.Name
+		  var ObjText as string = tt.ReadAll
+		  
+		  tt.close
+		  
+		  put_object(objName, ObjText)
+		  
+		  return
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub put_object(objName as string, objText as string)
+		  //
+		  // Request objects in a bucket
+		  //
+		  
+		   
+		  
+		  var selected_bucket as string = get_user_selected_bucket(true)
+		  
+		  if selected_bucket = "" then return
+		  
+		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
+		  
+		  var s3_request as new AWS_S3_PutObject(selected_bucket, new AWS_S3_item(ObjName, ObjText))
+		  
+		  var ret_status as string  = s3_request.SendRequest(s3_host)
+		  
+		  
+		  if s3_request.ErrorInfo = nil then
+		    label1.Text = ""
+		    label2.Text = ""
+		    
+		  else
+		    label1.text = s3_request.ErrorInfo.Code
+		    label2.text = s3_request.ErrorInfo.Message
+		    
+		  end if
+		  
+		  
+		  TextArea1.text =  ret_status
+		  
+		  
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -1499,64 +1480,7 @@ End
 #tag Events pb_save_object
 	#tag Event
 		Sub Pressed()
-		  //
-		  // Request objects in a bucket
-		  //
-		  
-		  var fs as FolderItem = GetOpenFolderItem("")
-		  var tt as TextInputStream
-		  
-		  if fs = nil then return 
-		  
-		  if fs.IsFolder then 
-		    MessageBox("Please select a flle, not a folder.")
-		    return 
-		  end if
-		  
-		  var selected_bucket as string
-		  
-		  try
-		    selected_bucket = self.lb_buckets.CellTextAt(lb_buckets.SelectedRowIndex,0)
-		    lbl_selectedBucket.text = selected_bucket
-		    
-		  Catch
-		    lbl_selectedBucket.text =  ""
-		    MessageBox("Please select a bucket")
-		    return 
-		    
-		  end try
-		  
-		  
-		  
-		  tt = TextInputStream.Open(fs)
-		  
-		  var objName as string = "savedObjects/" + fs.Name
-		  var ObjText as string = tt.ReadAll
-		  
-		  tt.close
-		  
-		  
-		  
-		  var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials, DefaultTraceMode)
-		  
-		  var s3_request as new AWS_S3_PutObject(selected_bucket, new AWS_S3_item(ObjName, ObjText))
-		  
-		  var ret_status as string  = s3_request.SendRequest(s3_host)
-		  
-		  
-		  if s3_request.ErrorInfo = nil then
-		    label1.Text = ""
-		    label2.Text = ""
-		    
-		  else
-		    label1.text = s3_request.ErrorInfo.Code
-		    label2.text = s3_request.ErrorInfo.Message
-		    
-		  end if
-		  
-		  
-		  TextArea1.text =  ret_status
-		  
+		  put_file
 		  
 		End Sub
 	#tag EndEvent
@@ -1656,6 +1580,13 @@ End
 		  
 		  Return
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pb_delete_object
+	#tag Event
+		Sub Pressed()
+		  delete_object
 		End Sub
 	#tag EndEvent
 #tag EndEvents
