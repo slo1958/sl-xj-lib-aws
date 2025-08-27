@@ -3,8 +3,11 @@ Protected Class AWS_S3_InternalTests
 Inherits AWS_S3_Host
 	#tag Method, Flags = &h0
 		Sub Constructor()
-		  // Calling the overridden superclass constructor.
-		  
+		  //
+		  // Class uses to test the elements used in the calculation of the signing key
+		  //
+		  // Not required for normal usage
+		  // 
 		  var dct as new Dictionary
 		  
 		  dct.value(aws_keyword_access_key_id) = "AKIAIOSFODNN7EXAMPLE"
@@ -45,7 +48,7 @@ Inherits AWS_S3_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function DecodeTimeStemp_test_01() As string
+		Function DecodeTimeStamp_test_01() As string
 		  var res_calculated as String
 		  var res_expected as string = "2022-11-07 11:03:43"
 		  
@@ -66,7 +69,7 @@ Inherits AWS_S3_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function DecodeTimeStemp_test_02() As string
+		Function DecodeTimeStamp_test_02() As string
 		  var res_calculated as String
 		  var res_expected as string = "NIL"
 		  
@@ -86,7 +89,7 @@ Inherits AWS_S3_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function DecodeTimeStemp_test_03() As string
+		Function DecodeTimeStamp_test_03() As string
 		  var res_calculated as String
 		  var res_expected as string = "NIL"
 		  
@@ -449,9 +452,9 @@ Inherits AWS_S3_Host
 		  
 		  test_results.Append(self.ExtractObjectInfoFromXML_test_01)
 		  
-		  test_results.Append(self.DecodeTimeStemp_test_01)
-		  test_results.Append(self.DecodeTimeStemp_test_02)
-		  test_results.Append(self.DecodeTimeStemp_test_03)
+		  test_results.Append(self.DecodeTimeStamp_test_01)
+		  test_results.Append(self.DecodeTimeStamp_test_02)
+		  test_results.Append(self.DecodeTimeStamp_test_03)
 		  
 		  test_results.Append(self.DecodeError_test_01)
 		  
