@@ -16,8 +16,32 @@ With the following content:
 aws\_access\_key\_id = (your access key)</br>
 aws\_secret\_access\_key = (your secret key)</br>
 aws\_region = (your region, for example eu-west-3)</br>
+aws\_provider = (your provider, for example amazon’s.com)<br>
 
 The test section uses fixed bucket name and file name. They are defined as constant in the definition of the WIndow1 object and must be updated.
+
+You can define multiple credentials and use them the code from their name:
+
+
+[testcredentials]</br>
+aws\_accees\_key\_id= …
+
+
+And replacing
+
+```xojo
+
+var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials(), DefaultTraceMode)
+```
+
+By 
+
+```xojo
+
+
+var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials(“testcredentials”), DefaultTraceMode)
+```
+
 
 ## Constants in Window1
 
