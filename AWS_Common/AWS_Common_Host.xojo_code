@@ -234,10 +234,10 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Function getHost(withRegion as Boolean = True) As string
 		  if withRegion then
-		    return AWSService + "." + AWSRegion + ".amazonaws.com"
+		    return AWSService + "." + AWSRegion + "." + GetProvider
 		    
 		  else
-		    return AWSService + ".amazonaws.com"
+		    return AWSService + "."+getProvider
 		    
 		  end if
 		  
@@ -264,6 +264,12 @@ Protected Class AWS_Common_Host
 		  
 		  
 		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetProvider() As string
+		  return "amazonaws.com"
 		End Function
 	#tag EndMethod
 
@@ -594,7 +600,7 @@ Protected Class AWS_Common_Host
 		  
 		  self.S3Log_WriteSep(LogFileName, "REQUEST")
 		  
-		  var url as string = "https://" +  host + UriEncode(uri, true) ' "s3.eu-west-3.amazonaws.com"
+		  var url as string = "https://" +  host + UriEncode(uri, true) ' for example: "s3.eu-west-3.amazonaws.com"
 		  
 		  var timeout as integer = 30
 		  var reply as new AWS_Reply
@@ -909,6 +915,22 @@ Protected Class AWS_Common_Host
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LogFileName"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TraceMode"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
