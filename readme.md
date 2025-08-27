@@ -9,8 +9,8 @@ In the unlikely case someone finds a bug ;), please use github to report the iss
 
 Test program implementing a basic navigator.
 
-To run the program, you need to create a text file named xxx
-With the following content:
+To run the program, you need to create a text file named <b>credentials</b>
+wtih the following content:
 
 [default]</br>
 aws\_access\_key\_id = (your access key)</br>
