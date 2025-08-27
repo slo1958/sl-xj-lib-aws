@@ -31,9 +31,10 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Sub Constructor(credentials as Dictionary, TraceRequest as boolean)
 		  
-		  self.AWSAccessKeyId = credentials.value("aws_access_key_id")
-		  self.AWSSecretAccessKey = credentials.value("aws_secret_access_key")
-		  self.AWSRegion = credentials.lookup("aws_region", "us-east-1")
+		  self.AWSAccessKeyId = credentials.value(aws_keyword_access_key_id)
+		  self.AWSSecretAccessKey = credentials.value(aws_keyword_secret_access_key)
+		  self.AWSRegion = credentials.lookup(aws_keyword_region, aws_default_region)
+		  self.AWSProvider = credentials.Lookup(aws_keyword_provider, aws_default_provider)
 		  self.AWSService = "??"
 		  
 		  self.TraceMode = TraceRequest
@@ -46,10 +47,11 @@ Protected Class AWS_Common_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string="us-east-1")
+		Sub Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string = "", theProvider as string = "")
 		  self.AWSAccessKeyId = theAWSAccessKeyId.trim()
 		  self.AWSSecretAccessKey = theAWSSecretKey.trim()
-		  self.AWSRegion = theRegion.trim() 
+		  self.AWSRegion = StringWithDefault(theRegion.trim(), aws_default_region)
+		  self.AWSProvider = StringWithDefault(theProvider.trim(), aws_default_provider)
 		  self.AWSService = "??"
 		  
 		  self.TraceMode = False
@@ -234,10 +236,10 @@ Protected Class AWS_Common_Host
 	#tag Method, Flags = &h0
 		Function getHost(withRegion as Boolean = True) As string
 		  if withRegion then
-		    return AWSService + "." + AWSRegion + "." + GetProvider
+		    return AWSService + "." + AWSRegion + "." + AWSProvider
 		    
 		  else
-		    return AWSService + "."+getProvider
+		    return AWSService + "." + AWSProvider
 		    
 		  end if
 		  
@@ -269,7 +271,8 @@ Protected Class AWS_Common_Host
 
 	#tag Method, Flags = &h0
 		Function GetProvider() As string
-		  return "amazonaws.com"
+		  
+		  return self.AWSProvider
 		End Function
 	#tag EndMethod
 
@@ -449,10 +452,8 @@ Protected Class AWS_Common_Host
 		  // aws_access_key_id = <access key_id>
 		  // aws_secret_access_key = <access key secret>
 		  // aws_region = <aws region>
+		  // aws_provider = <aws_provider>
 		  //
-		  
-		  
-		  
 		  
 		  var search_str as string = credentials_group
 		  
@@ -467,8 +468,9 @@ Protected Class AWS_Common_Host
 		  for each line as string in lines_buffer
 		    line = line.Trim()
 		    
-		    
-		    if line = "[" + search_str +"]" then
+		    if line.length = 0 then
+		      
+		    elseif line = "[" + search_str +"]" then
 		      section_found = True
 		      
 		    elseif line.left(1)="[" and line.right(1)="]" then
@@ -479,18 +481,21 @@ Protected Class AWS_Common_Host
 		      
 		      if parts.Ubound = 1 then
 		        dct.Value(parts(0).trim) = parts(1).trim
+		        
 		      else
 		        System.DebugLog("Ignoring " + line)
 		        
 		      end if
+		      
 		    else
 		      
 		    end if
 		    
 		  next
 		  
-		  System.DebugLog("Access_key:" + dct.Lookup("aws_access_key_id","(missing)"))
-		  System.DebugLog("Region:" + dct.Lookup("aws_region","(missing)"))
+		  System.DebugLog("Access_key:" + dct.Lookup(aws_keyword_access_key_id,"(missing)"))
+		  System.DebugLog("Region:" + dct.Lookup(aws_keyword_region,"(missing)"))
+		  System.DebugLog("Provider:" + dct.Lookup(aws_keyword_provider,"(missing)"))
 		  
 		  return dct
 		  
@@ -701,6 +706,19 @@ Protected Class AWS_Common_Host
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function StringWithDefault(value as string, defaultValue as string) As string
+		  if value.trim.length = 0 then
+		    return defaultValue
+		    
+		  else 
+		    Return value.trim()
+		    
+		  end if
+		  
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Function TimeStampISO8601Format(param as date) As string
 		  var d as  date = param
@@ -812,6 +830,10 @@ Protected Class AWS_Common_Host
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		AWSProvider As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		AWSRegion As string
 	#tag EndProperty
 
@@ -842,6 +864,25 @@ Protected Class AWS_Common_Host
 	#tag Property, Flags = &h0
 		TraceMode As Boolean
 	#tag EndProperty
+
+
+	#tag Constant, Name = aws_default_provider, Type = String, Dynamic = False, Default = \"amazonaws.com", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = aws_default_region, Type = String, Dynamic = False, Default = \"us-east-1", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = aws_keyword_access_key_id, Type = String, Dynamic = False, Default = \"aws_access_key_id", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = aws_keyword_provider, Type = String, Dynamic = False, Default = \"aws_provider", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = aws_keyword_region, Type = String, Dynamic = False, Default = \"aws_region", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = aws_keyword_secret_access_key, Type = String, Dynamic = False, Default = \"aws_secret_access_key", Scope = Public
+	#tag EndConstant
 
 
 	#tag ViewBehavior
