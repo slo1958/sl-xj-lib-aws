@@ -1,5 +1,5 @@
 # sl-xj-lib-aws
-Xojo library to transfer files to and from a AWS S3 bucket
+Xojo library to transfer objects to and from a AWS S3 bucket
 
 The library is provided as is for free and it is available in a github repo. Please give credit to the author when applicable. 
 In the unlikely case someone finds a bug ;), please use github to report the issue.
@@ -20,26 +20,61 @@ aws\_provider = (your provider, for example amazonaws.com)<br>
 
 The test section uses fixed bucket name and file name. They are defined as constant in the definition of the WIndow1 object and must be updated.
 
-You can define multiple credentials and use them the code from their name:
+You can define multiple credentials and use them in the code using their name:
 
 
-[testcredentials]</br>
-aws\_accees\_key\_id= …
+[credentials1]</br>
+aws\_access\_key\_id= …</br>
+…</br>
 
+[credentials2]</br>
+aws\_access\_key\_id= …</br>
+…</br>
 
-And replacing
+And then update the call to the constructor of <b>AWS_Credentials</b> as follow:
+
+Using the default values, calling the constructor without parameters:
 
 ```xojo
 
-var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials(), DefaultTraceMode)
+var s3_host as new AWS_S3_Host(new AWS_Credentials(), DefaultTraceMode)
+
 ```
 
-By 
+Requesting a specific set of credentials: 
 
 ```xojo
 
+var s3_host as new AWS_S3_Host(new AWS_Credentials(“credentials1”)), DefaultTraceMode)
 
-var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials(“testcredentials”), DefaultTraceMode)
+
+```
+The constructor of AWS_Credentials will load the credentials from the credentials file. You can prevent auto loading as follow:
+
+```xojo
+
+var s3_host as new AWS_S3_Host(new AWS_Credentials(AWS_Credentials.NoAutoLoad), DefaultTraceMode)
+
+```
+All key/value pairs defined for each set of credentials are preserved. You can add your own parameters:
+
+
+
+[credentials1]</br>
+aws\_access\_key\_id= …</br>
+…</br>
+age\_du\_capitaine = 32
+
+And retrieve the value as follow:
+
+```xojo
+
+var s3_cred = new AWS_Credentials(“credentials1”)
+
+var something as string = s3_cred.GetCustomParameter(“age_du_capitaine”)
+
+var s3_host as new AWS_S3_Host( s3_cred , DefaultTraceMode)
+
 ```
 
 ## Notes

@@ -29,12 +29,13 @@ Protected Class AWS_Common_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(credentials as Dictionary, TraceRequest as boolean)
+		Sub Constructor(credentials as AWS_Credentials, TraceRequest as boolean)
 		  
-		  self.AWSAccessKeyId = credentials.value(aws_keyword_access_key_id)
-		  self.AWSSecretAccessKey = credentials.value(aws_keyword_secret_access_key)
-		  self.AWSRegion = credentials.lookup(aws_keyword_region, aws_default_region)
-		  self.AWSProvider = credentials.Lookup(aws_keyword_provider, aws_default_provider)
+		  self.AWSAccessKeyId = credentials.AWSAccessKeyId
+		  self.AWSSecretAccessKey = credentials.AWSSecretAccessKey
+		  self.AWSRegion = credentials.AWSRegion
+		  self.AWSProvider = credentials.AWSProvider
+		  
 		  self.AWSService = "??"
 		  
 		  self.TraceMode = TraceRequest
@@ -42,21 +43,6 @@ Protected Class AWS_Common_Host
 		  S3Log_CheckFolder()
 		  
 		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string = "", theProvider as string = "")
-		  self.AWSAccessKeyId = theAWSAccessKeyId.trim()
-		  self.AWSSecretAccessKey = theAWSSecretKey.trim()
-		  self.AWSRegion = StringWithDefault(theRegion.trim(), aws_default_region)
-		  self.AWSProvider = StringWithDefault(theProvider.trim(), aws_default_provider)
-		  self.AWSService = "??"
-		  
-		  self.TraceMode = False
-		  
-		  S3Log_CheckFolder()
 		  
 		End Sub
 	#tag EndMethod
@@ -444,66 +430,6 @@ Protected Class AWS_Common_Host
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function LoadCredentials(credentials_group as string = "default") As Dictionary
-		  //
-		  // Credential file example:
-		  //
-		  // [default]
-		  // aws_access_key_id = <access key_id>
-		  // aws_secret_access_key = <access key secret>
-		  // aws_region = <aws region>
-		  // aws_provider = <aws_provider>
-		  //
-		  
-		  var search_str as string = credentials_group
-		  
-		  var dct as new Dictionary
-		  
-		  var txt_buffer as string = credentials.ReplaceAll(chr(13), chr(10))
-		  var lines_buffer() as string = txt_buffer.Split(chr(10))
-		  var parts() as string
-		  
-		  var section_found as boolean = false
-		  
-		  for each line as string in lines_buffer
-		    line = line.Trim()
-		    
-		    if line.length = 0 then
-		      
-		    elseif line = "[" + search_str +"]" then
-		      section_found = True
-		      
-		    elseif line.left(1)="[" and line.right(1)="]" then
-		      section_found = False
-		      
-		    elseif section_found then
-		      parts = line.split("=")
-		      
-		      if parts.Ubound = 1 then
-		        dct.Value(parts(0).trim) = parts(1).trim
-		        
-		      else
-		        System.DebugLog("Ignoring " + line)
-		        
-		      end if
-		      
-		    else
-		      
-		    end if
-		    
-		  next
-		  
-		  System.DebugLog("Access_key:" + dct.Lookup(aws_keyword_access_key_id,"(missing)"))
-		  System.DebugLog("Region:" + dct.Lookup(aws_keyword_region,"(missing)"))
-		  System.DebugLog("Provider:" + dct.Lookup(aws_keyword_provider,"(missing)"))
-		  
-		  return dct
-		  
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Shared Function MemoryBlockToHex(m as MemoryBlock) As String
 		  var tmp as string
 		  
@@ -830,6 +756,10 @@ Protected Class AWS_Common_Host
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		AWSCredentials As AWS_Credentials
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		AWSProvider As string
 	#tag EndProperty
 
@@ -864,25 +794,6 @@ Protected Class AWS_Common_Host
 	#tag Property, Flags = &h0
 		TraceMode As Boolean
 	#tag EndProperty
-
-
-	#tag Constant, Name = aws_default_provider, Type = String, Dynamic = False, Default = \"amazonaws.com", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = aws_default_region, Type = String, Dynamic = False, Default = \"us-east-1", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = aws_keyword_access_key_id, Type = String, Dynamic = False, Default = \"aws_access_key_id", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = aws_keyword_provider, Type = String, Dynamic = False, Default = \"aws_provider", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = aws_keyword_region, Type = String, Dynamic = False, Default = \"aws_region", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = aws_keyword_secret_access_key, Type = String, Dynamic = False, Default = \"aws_secret_access_key", Scope = Public
-	#tag EndConstant
 
 
 	#tag ViewBehavior

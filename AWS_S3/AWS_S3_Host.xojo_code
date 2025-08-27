@@ -2,7 +2,7 @@
 Protected Class AWS_S3_Host
 Inherits AWS_Common_Host
 	#tag Method, Flags = &h0
-		Sub Constructor(credentials as Dictionary, traceRequest as boolean)
+		Sub Constructor(credentials as AWS_Credentials, traceRequest as boolean)
 		  
 		  Super.Constructor(credentials, TraceRequest)
 		  
@@ -12,18 +12,32 @@ Inherits AWS_Common_Host
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Constructor(theAWSAccessKeyId as string, theAWSSecretKey as string, theRegion as string="us-east-1")
-		  // Calling the overridden superclass constructor.
-		  Super.Constructor(theAWSAccessKeyId, theAWSSecretKey, theRegion)
-		  
-		  AWSService = "s3"
-		  
-		End Sub
-	#tag EndMethod
-
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="LogFileName"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TraceMode"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AWSProvider"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="string"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AWSAccessKeyId"
 			Visible=false

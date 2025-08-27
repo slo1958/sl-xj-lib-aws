@@ -8,12 +8,12 @@ Inherits AWS_S3_Host
 		  //
 		  // Not required for normal usage
 		  // 
-		  var dct as new Dictionary
+		  var AWSCred as new AWS_Credentials()
 		  
-		  dct.value(aws_keyword_access_key_id) = "AKIAIOSFODNN7EXAMPLE"
-		  dct.value(aws_keyword_secret_access_key) = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+		  AWSCred.AWSAccessKeyId  = "AKIAIOSFODNN7EXAMPLE"
+		  AWSCred.AWSSecretAccessKey = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 		  
-		  Super.Constructor(dct, True)
+		  Super.Constructor(AWSCred, True)
 		  
 		  self.RequestDateTime = new Date ' 20130524T000000Z (Fri, 24 May 2013 00:00:00 GMT)
 		  self.RequestDateTime.GMTOffset = 0

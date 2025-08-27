@@ -25,6 +25,7 @@ Class=AWS_S3_ListObjectsInBucket;AWS_S3/Requests/AWS_S3_ListObjectsInBucket.xojo
 Folder=InternalTests;AWS_S3/InternalTests;&h000000002AC46FFF;&h000000006AF617FF;false
 Class=AWS_S3_InternalTests;AWS_S3/InternalTests/AWS_S3_InternalTests.xojo_code;&h0000000003EA4FFF;&h000000002AC46FFF;false
 Class=AWS_Error_info;AWS_Common/AWS_Error_info.xojo_code;&h000000006771DFFF;&h000000000C343FFF;false
+Class=AWS_Credentials;AWS_Common/AWS_Credentials.xojo_code;&h000000001C8887FF;&h000000000C343FFF;false
 DefaultWindow=Window1
 AppMenuBar=MainMenuBar
 MajorVersion=1
