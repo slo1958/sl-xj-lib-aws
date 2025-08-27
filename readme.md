@@ -42,6 +42,10 @@ By
 var s3_host as new AWS_S3_Host(AWS_Common_Host.LoadCredentials(“testcredentials”), DefaultTraceMode)
 ```
 
+## Notes
+1. The library has only been tested against amazonaws.com.
+
+
 
 ## Constants in Window1
 
